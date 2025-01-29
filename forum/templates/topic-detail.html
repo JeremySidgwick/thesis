@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="dx-box-1 pb-100 bg-grey-6">
+    <div class="container">
+                <div class="dx-blog-post dx-box dx-box-decorated">
+
+
+                    <div class="dx-blog-post-box">
+
+                        <h1 class="h3 dx-blog-post-title">Sujet : {{ topic.title }}</h1>
+                        <ul class="dx-blog-post-info">
+                            <li>Date Posted: {{ topic.date_created }}</li>
+                            <li>Total Views: {{ topic.topic_view_count }}</li>
+                            <li>Author: {{ topic.author }}</li>
+                        </ul>
+                        <p class="mnb-2">{{ topic.description }}</p>
+                    </div>
+                    {% if image %}
+                    <div id="canvas-container">
+                        <canvas id="canvas" ></canvas>
+                    </div>
+                {% include "local/module_zoom.html" %}
+                {% endif %}
+                  </div>
+                <div class="dx-box mt-55">
+                    {% if  answers.count > 0 %}
+                    <h2 class="h4 mb-45">{{ answers.count }} answer{{ answers|pluralize }} in this topic: </h2>
+                    {% else %}
+                    <h2 class="h4 mb-45">Be the first to answer in this topic!</h2>
+                    {% endif %}
+                    {% for answer in answers %}
+                    <div class="dx-comment">
+
+                        <div>
+                            <div class="dx-comment-img">
+                                <img src="{{ answer.user.author.profile_pic.url }}" alt="" class="rounded-circle">
+                            </div>
+                            <div class="dx-comment-cont">
+                                <p class="dx-comment-info">
+                                    <span class="dx-comment-name">{{ answer.user|capfirst }}</span>
+
+                                    {% if answer.user.author.is_doctor %}
+                                    <span class="dx-comment-profession">
+                                        <img src="{% static 'images/badge-doctor.png' %}" width="45px;" alt="">
+                                        <span class="label-doctor">Certified Doctor</span>
+                                    </span>
+                                    {% else %}
+                                    <span class="dx-comment-profession">
+                                        <img src="{% static 'images/badge-user.png' %}" width="45px;" alt="">
+                                        <span class="label-user">General User</span>
+                                    </span>
+                                    {% endif %}
+
+                                    <span class="dx-comment-date">
+                                        answered at {{ answer.date_created }}
+                                    </span>
+                                </p>
+
+                                <div class="dx-comment-text">
+                                    <p class="mb-0">{{ answer.content }}</p>
+                                </div>
+                                <!-- vote section -->
+                                <div id="vote-section">
+                                    {% include 'vote-section.html' %}
+                                </div>
+                                <!-- / vote section -->
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                    <form action="" method="POST" class="dx-form mt-50 mb-45">
+                        <div class="row vertical-gap">
+                            <div class="col-12">
+                                {% csrf_token %}
+                                {{ answer_form }}
+                                <input type="submit" class="dx-btn dx-btn-lg" value="Post Answer">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+          
+    </div>
+</div>
+    <script type="application/json" id="rectangles-data">
+        {{ rectangles_data|safe }}
+    </script>
+    <script>
+    var canvas = new fabric.Canvas('canvas');
+    var rectangles = [];  // Array to store all rectangle coordinates
+    var image;
+    // Load the background image
+    fabric.Image.fromURL("{{ image.url }}", function(img) {
+        canvas.setWidth(img.width);
+        canvas.setHeight(img.height);
+        img.set({ selectable: false });
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+        image = img
+        // Draw existing rectangles on the image
+
+        const existingRectangles = JSON.parse(document.getElementById('rectangles-data').textContent);
+
+        existingRectangles.forEach(function(data) {
+            const rect = new fabric.Rect({
+                left: data.x,
+                top: data.y,
+                width: data.width,
+                height: data.height,
+                angle: data.angle,
+                fill: 'rgba(0,0,255,0.1)',
+                selectable: false,
+                rectid: data.id,
+                moved:false
+                {#TODO check dans les autre fichier si c'est uile'#}
+            });
+            canvas.add(rect);
+            rectangles.push(rect);
+        });
+    });
+</script>
+
+{% endblock content %}

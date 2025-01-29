@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div id="left_box">
+
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    {% include "local/module_zoom.html" %}
+
+</div>
+
+<div id="right_box">
+    {#    TODO check un bouton dans un a ? #}
+     <a href="{% url 'export_data' type='document' id=doc_id %}">
+        <button>Exporter les données (CSV) </button>
+    </a>
+
+
+    {% if general_forum != "" %}
+    <a target="_blank" href="{% url 'user-post' type='d' id=general_forum %}" class="feedbackButton">Voir le forum de ce document</a>
+    {% endif %}
+    {% for rectangle in transcription_data %}
+        <br>
+
+        {# TODO a nettoyer#}
+{#        {{ rectangle.forum }}#}
+
+        {% for subtask in rectangle.subtasks %}
+            {% if forloop.last %}
+                <button name="rect_{{rectangle.rectangle_id}}"  onclick="buttonclick(this)" class="accordion">{{ subtask.text }}</button>
+            {% endif %}
+        {% endfor %}
+        <div class="panel">
+            {% if rectangle.forum != '' %}
+                <a target="_blank" href="{% url 'user-post' type='r' id=rectangle.forum %}" class="feedbackButton">Voir le forum sur ce ligne</a>
+            {% endif %}
+            <p>Historique des propositions:</p>
+            {% for subtask in rectangle.subtasks %}
+                <p>{{ subtask.text}}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    var canvas = new fabric.Canvas('canvas');
+    var rectangles = [];  // Array to store all rectangle coordinates
+    var image;
+
+    // Load the background image
+    fabric.Image.fromURL("{{ image.url }}", function(img) {
+        canvas.setWidth(img.width);
+        canvas.setHeight(img.height);
+        img.set({ selectable: false });
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+        image = img
+        // Draw existing rectangles on the image
+        const existingRectangles = {{ rectangles|safe }};  // Get rectangles from Django
+        existingRectangles.forEach(function(data) {
+            const rect = new fabric.Rect({
+                left: data.x,
+                top: data.y,
+                width: data.width,
+                height: data.height,
+                angle: data.angle,
+                fill: 'rgba(0,0,255,0.1)',
+                selectable: false,
+                rectid: data.id,
+                moved:false
+                {#TODO check dans les autre fichier si c'est uile'#}
+            });
+            canvas.add(rect);
+            rectangles.push(rect);
+        });
+    });
+
+
+    var acc = document.getElementsByClassName("accordion");
+    let previousClick = null;
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        if(previousClick!=null && previousClick!==this) {
+            previousClick.classList.toggle("active",force=false);
+            previousClick.nextElementSibling.style.display = "none";
+        }
+        previousClick = this;
+
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+          if (panel.style.display === "block") {
+          panel.style.display = "none";
+        } else {
+          panel.style.display = "block";
+        }
+      });
+    }
+
+    </script>
+{% endblock %}

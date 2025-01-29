@@ -1,0 +1,314 @@
+[
+{
+  "model": "authentication.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$dzv088nFqM2bpP7nEUX4YW$CDzsBBj7aOQGtttGQ76RN2pkIln4IaVKkxOv2RgQ/Is=",
+    "last_login": "2024-12-03T08:36:53.271Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@admin.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2024-11-28T15:00:02Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$OgJ0I9eJZfU5rgBcl62Uti$zSgejql/dUJBfJ0gQaLVLi8vjnWXbsQmjNKNfeX6KWg=",
+    "last_login": "2024-11-29T11:58:20.925Z",
+    "is_superuser": false,
+    "username": "toto",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-11-29T09:57:16.038Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$4Ib1JHkdjl4o32tsjtcVgs$JFz8YlHL2BUDKshhQgRYBKxWpDyUV9/3K8E2GB6dOMI=",
+    "last_login": "2024-11-29T10:38:54.183Z",
+    "is_superuser": false,
+    "username": "cha",
+    "first_name": "a",
+    "last_name": "a",
+    "email": "cha@a.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-11-29T10:38:53.669Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$TW66R0Ap5ZXC1PzYzbZmwA$rsYu/CaHMJ2xuDI3Ym75UFJ+RRbNzhcBwPhF7qn9tCs=",
+    "last_login": "2024-11-29T10:39:56.159Z",
+    "is_superuser": false,
+    "username": "charlie",
+    "first_name": "a",
+    "last_name": "b",
+    "email": "charle@a.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-11-29T10:39:55.620Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$DlMZCiebxtzs96hnW9ht8W$ZtuycKjFPK+6VddpJPgfE2gQvCkOUtjAn87CX00f7fY=",
+    "last_login": "2024-12-03T08:57:45.739Z",
+    "is_superuser": false,
+    "username": "bob",
+    "first_name": "bob",
+    "last_name": "bob",
+    "email": "bob@bob.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-11-29T12:02:22.459Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$ZHJnRcl58qMHBCZC4qyxFe$0Val5sllTS8gYSOapjkca6GgBDFF2nV4DKA+pmJvubc=",
+    "last_login": "2024-11-29T13:53:44.203Z",
+    "is_superuser": false,
+    "username": "verif",
+    "first_name": "v",
+    "last_name": "e",
+    "email": "verif@c.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-11-29T13:47:19.272Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$Q85j0m2hA0ZyS94cu47jbm$mH5Pp1OAoGKvw+Z+Sg9zEWi/6AgkYF2pmohOVlMlfm0=",
+    "last_login": "2024-11-29T15:09:25.613Z",
+    "is_superuser": false,
+    "username": "david",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-11-29T15:09:25.054Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$urtBtJugm703Ygn7IvfQJw$ro+uTUBOm69dU3HrNrTffqJd7JhVDgvVSGmzMBkhHdw=",
+    "last_login": "2024-12-02T16:56:50.764Z",
+    "is_superuser": false,
+    "username": "visi",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-12-02T16:56:50.228Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "crowdsourcing.project",
+  "pk": 4,
+  "fields": {
+    "name": "ONE",
+    "description": "1ere"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 20,
+  "fields": {
+    "image": "jan-slave-july-1522_1sul5AY.jpg",
+    "project": 4,
+    "status": "completed",
+    "name": null
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 21,
+  "fields": {
+    "image": "willem-snellaert-september-1502_QDe0RIy.jpg",
+    "project": 4,
+    "status": "to_transcribe",
+    "name": null
+  }
+},
+{
+  "model": "crowdsourcing.rectangle",
+  "pk": 33,
+  "fields": {
+    "document": 20,
+    "x": 49,
+    "y": 219,
+    "width": 294,
+    "height": 196,
+    "angle": 0.0,
+    "done": true
+  }
+},
+{
+  "model": "crowdsourcing.task",
+  "pk": 97,
+  "fields": {
+    "document": 20,
+    "user": 1,
+    "stated": "2024-12-03T10:54:14.950Z",
+    "ended": "2024-12-03T11:54:14.949Z",
+    "status": "completed",
+    "type": "transcription"
+  }
+},
+{
+  "model": "crowdsourcing.task",
+  "pk": 98,
+  "fields": {
+    "document": 20,
+    "user": 1,
+    "stated": "2024-12-03T10:54:40.888Z",
+    "ended": "2024-12-03T11:54:40.887Z",
+    "status": "completed",
+    "type": "transcription"
+  }
+},
+{
+  "model": "crowdsourcing.task",
+  "pk": 100,
+  "fields": {
+    "document": 20,
+    "user": 1,
+    "stated": "2024-12-03T10:58:18.672Z",
+    "ended": "2024-12-03T11:58:18.672Z",
+    "status": "completed",
+    "type": "verification"
+  }
+},
+{
+  "model": "crowdsourcing.subtask",
+  "pk": 43,
+  "fields": {
+    "rectangle": 33,
+    "task": 97,
+    "text": "msg",
+    "time": "2024-12-03T10:54:27.368Z",
+    "feedback": "",
+    "status": "in_progress"
+  }
+},
+{
+  "model": "crowdsourcing.subtask",
+  "pk": 44,
+  "fields": {
+    "rectangle": 33,
+    "task": 97,
+    "text": "ok",
+    "time": "2024-12-03T10:54:36.060Z",
+    "feedback": "",
+    "status": "in_progress"
+  }
+},
+{
+  "model": "crowdsourcing.subtask",
+  "pk": 45,
+  "fields": {
+    "rectangle": 33,
+    "task": 98,
+    "text": "aaaaaaa",
+    "time": "2024-12-03T10:56:07.960Z",
+    "feedback": "",
+    "status": "in_progress"
+  }
+},
+{
+  "model": "crowdsourcing.subtask",
+  "pk": 46,
+  "fields": {
+    "rectangle": 33,
+    "task": 98,
+    "text": "nnnn",
+    "time": "2024-12-03T10:56:18.117Z",
+    "feedback": "",
+    "status": "in_progress"
+  }
+},
+{
+  "model": "crowdsourcing.subtask",
+  "pk": 47,
+  "fields": {
+    "rectangle": 33,
+    "task": 100,
+    "text": "ok",
+    "time": "2024-12-03T11:04:14.776Z",
+    "feedback": "",
+    "status": "completed"
+  }
+},
+{
+  "model": "crowdsourcing.subtask",
+  "pk": 48,
+  "fields": {
+    "rectangle": 33,
+    "task": 100,
+    "text": "a",
+    "time": "2024-12-03T11:04:24.369Z",
+    "feedback": "",
+    "status": "completed"
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 9,
+  "fields": {
+    "user": 1,
+    "project": 4,
+    "role": "manager",
+    "last_participation": "2024-12-03T10:46:56Z",
+    "participation_amount": 0
+  }
+}
+]

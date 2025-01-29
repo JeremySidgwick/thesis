@@ -1,0 +1,51 @@
+{% comment %}
+Module qui permet d'avoir des boutons zoom in out et reset pour le canvas
+{% endcomment %}
+
+<div>
+        <button id="zoom-in"><i class="fa fa-search-plus" aria-hidden="true"></i>Zoom In</button>
+        <button id="zoom-out"><i class="fa fa-search-minus" aria-hidden="true"></i>Zoom Out</button>
+        <button id="reset-zoom"><i class="fa fa-search" aria-hidden="true"></i>Reset Zoom</button>
+</div>
+
+
+<script>
+    // Zoom functionality
+    var zoomLevel = 1; // Initial zoom level
+
+    // Zoom in
+    document.getElementById('zoom-in').addEventListener('click', function () {
+        zoomLevel += 0.1; // Increase zoom level
+        adjustCanvasSize(zoomLevel);
+    });
+
+    // Zoom out
+    document.getElementById('zoom-out').addEventListener('click', function () {
+        zoomLevel = Math.max(0.1, zoomLevel - 0.1); // Decrease zoom, but not below 0.1
+        adjustCanvasSize(zoomLevel);
+    });
+
+    // Reset zoom
+    document.getElementById('reset-zoom').addEventListener('click', function () {
+        adjustCanvasSize(1);
+    });
+
+    function adjustCanvasSize(zoom) {
+        // Calculer la nouvelle taille
+        canvas.setWidth(image.width * zoom);
+        canvas.setHeight(image.height * zoom);
+        canvas.setZoom(zoom);
+        canvas.renderAll();
+    }
+</script>
+
+{% comment %}    canvas.on('mouse:wheel', function (opt) {
+        var delta = opt.e.deltaY;
+        zoomLevel = zoomLevel - delta / 500; // Ajuster le zoom
+        zoomLevel = Math.min(Math.max(zoomLevel, 0.1), 4); // Limiter entre 0.1 et 4
+        adjustCanvasSize(zoomLevel)
+
+        // Empêcher le défilement par défaut
+        opt.e.preventDefault();
+        opt.e.stopPropagation();
+    });{% endcomment %}

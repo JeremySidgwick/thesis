@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="left_box">
+<div id="canvas-container">
+    <canvas id="canvas" ></canvas>
+</div>
+    {% include "local/module_zoom.html" %}
+    <button id="submit" onclick="submitRectangles()">Submit Rectangles</button>
+
+</div>
+<div id="right_box">
+    <form action="" method="post">
+        {% csrf_token %}
+        Transcription :
+        {% for rect, form, text_value in forms %}
+            <div>
+                <label for="rect_{{ rect.id }}"></label>
+                <!-- Utilisez un champ de texte avec l'attribut "name" unique -->
+                <input type="text" id='a' name="rect_{{ rect.id }}" data-rect-id="{{ rect.id }}" required  value="{{ text_value }}" onclick="buttonclick(this)"
+                    style="width: 90%"
+                >
+            </div>
+        {% endfor %}
+        <input name='submit' type="submit"  value="Submit to verification">
+        <input name="save" type="submit" formnovalidate value="Save progression"> {# submit for review   #}
+    </form>
+</div>
+
+<script>
+    var canvas = new fabric.Canvas('canvas');
+    var rectangles = [];  // Array to store all rectangle coordinates
+    var image;
+
+    // Load the background image
+    fabric.Image.fromURL("{{ image.url }}", function(img) {
+        canvas.setWidth(img.width);
+        canvas.setHeight(img.height);
+        img.set({ selectable: false });
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+        image = img
+        // Draw existing rectangles on the image
+        const existingRectangles = {{ rectangles|safe }};  // Get rectangles from Django
+        existingRectangles.forEach(function(data) {
+            const rect = new fabric.Rect({
+                left: data.x,
+                top: data.y,
+                width: data.width,
+                height: data.height,
+                angle: data.angle,
+                fill: 'rgba(0,0,255,0.1)',
+                selectable: true,  // Allow rectangles to be moved or resized
+                rectid: data.id,
+                moved:false
+            });
+            canvas.add(rect);
+            rectangles.push(rect);
+        });
+    });
+
+    // Variables to manage drawing state
+    var rect, isDown = false, isDrawing = false, origX, origY;
+
+    canvas.on('object:modified', function(e) {
+        const obj = e.target;
+        if (obj.type === 'rect' && obj.rectId) {
+            // Update the state in the dictionary
+            rectangles[obj.rectId] = {
+                left: obj.left,
+                top: obj.top,
+                width: obj.width * obj.scaleX,
+                height: obj.height * obj.scaleY,
+                angle: obj.angle,
+                moved:true
+            };
+        }
+    });
+
+    // Event: Mouse down to start drawing the rectangle
+    canvas.on('mouse:down', function(o) {
+        if (isDrawing) return;
+        if (canvas.getActiveObject()) {
+            return;  // Exit if clicking on an existing rectangle
+        }
+
+        isDown = true;
+        isDrawing = true;
+        var pointer = canvas.getPointer(o.e);
+        origX = pointer.x;
+        origY = pointer.y;
+
+        rect = new fabric.Rect({
+            left: origX,
+            top: origY,
+            originX: 'left',
+            originY: 'top',
+            width: pointer.x - origX,
+            height: pointer.y - origY,
+            angle: 0,
+            fill: 'rgba(255,0,0,0.25)',
+            transparentCorners: false,
+            rectid: -1,
+            moved: false
+        });
+        rectangles.push(rect);
+        canvas.add(rect);
+    });
+
+    // Event: Mouse move to resize the rectangle as we drag
+
+    canvas.on('mouse:move', function(o) {
+        if (!isDown) return;
+        var pointer = canvas.getPointer(o.e);
+        if (origX > pointer.x) {
+
+            rect.set({ left: Math.abs(pointer.x) });
+        }
+        if (origY > pointer.y) {
+            rect.set({ top: Math.abs(pointer.y) });
+        }
+        //console.log('mouse:move resize',rect);
+        rect.set({ width: Math.abs(origX - pointer.x) });
+        rect.set({ height: Math.abs(origY - pointer.y) });
+        rect.set({ moved: true });
+        canvas.renderAll();
+    });
+
+    // Event: Mouse up to finalize the rectangle
+    canvas.on('mouse:up', function(o) {
+        isDown = false;
+        isDrawing = false;
+        //submitRectangles();
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Delete' || event.key === 'Backspace') {
+            // Get the active object (selected rectangle) on the canvas
+            const activeObject = canvas.getActiveObject();
+
+            if (activeObject && activeObject.type === 'rect') {
+                // Remove the rectangle from the canvas
+                canvas.remove(activeObject);
+                canvas.renderAll();
+                //submitRectangles();
+            }
+        }
+    });
+
+
+    // Function to get current coordinates of all rectangles and submit them
+    function submitRectangles() {
+        // Clear the rectangles array
+        send_rectangles = [];
+
+        // Loop through all objects on the canvas
+        rectangles.forEach(function(obj) {
+            // Push the current coordinates of each rectangle to the array
+            if(obj.height >=10 && obj.width >=10) {
+                send_rectangles.push({
+                    x: obj.left,
+                    y: obj.top,
+                    width: obj.width * obj.scaleX,  // Scale width if the rectangle was resized
+                    height: obj.height * obj.scaleY,  // Scale height if the rectangle was resized
+                    angle: obj.angle,
+                    rectid:obj.rectid
+                });
+                }
+        });
+        const doc_id = window.location.href.split('/')[4];
+        // Send AJAX request with updated rectangle data
+        fetch("{% url 'save_rectangles' %}", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                document: doc_id,
+                rectangles: send_rectangles
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.reload();
+            } else {
+                alert('Failed to save coordinates.');
+            }
+        });
+    }
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="dx-main" style="margin: auto;text-align: justify">
+    <div class="dx-header   ">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7">
+                    <h1 class="h2 mb-30 text-center">forum to help people.</h1>
+                    <form action="{% url 'search-result' %}" class="dx-form dx-form-group-inputs">
+                        <input type="text" name="q" value="" class="form-control" placeholder="Search key words">
+                        <button  type="submit" class="dx-btn dx-btn-lg">Search</button>
+                    </form>
+                </div>
+                {% if messages %}
+                    <div class="search-msg">
+                        {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="dx-separator"></div>
+
+    <div class="dx-box-5 pb-100">
+        <div class="container">
+            <div class="row vertical-gap md-gap">
+                <div class="col-lg-8">
+                    <div class="dx-box dx-box-decorated">
+                        <div class="dx-blog-post">
+                            <div class="dx-blog-post-box pt-30 pb-30">
+                                <h2 class="h4 mnt-5 mb-9">Forum Topics</h2>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="dx-table dx-table-default">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Topic</th>
+                                            <th scope="col">Views</th>
+                                            <th scope="col">Answers</th>
+                                            <th scope="col">Post Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for post in user_posts %}
+                                        <tr style="outline: thin solid #D2D2D2">
+                                            <th scope="row" >
+                                                <a href="{% url 'topic-detail' post.id %}" class="dx-table-default-title">{{ post.title }}</a>
+                                                <p class="mb-0">{{ post.description }}</p>
+                                            </th>
+                                            <td>{{ post.topic_view_count }}</td>
+                                            <td>{{ post.answer_count }}</td>
+
+                                            <td class="dx-table-lastPost">
+                                                <div class="dx-table-default-info">
+                                                    <p class="mb-0">by <span style="color:rgb(212, 59, 59);">{{ post.author }}</span>
+                                                        <br><span class="dib">{{ post.date_created }}</span>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="dx-sticky dx-sidebar" data-sticky-offsetTop="120" data-sticky-offsetBot="40">
+                        <br>
+                        <br>
+                        <div class="dx-widget dx-box dx-box-decorated">
+                            <div class="dx-widget-title">
+                                Latest Articles
+                            </div>
+                            {% for blogs in latest_blogs %}
+                            <a href="{% url 'blog-detail' blogs.slug %}" class="dx-widget-link">
+                                <span class="dx-widget-link-text">{{ blogs.title }}</span>
+                                <span class="dx-widget-link-date">{{ blogs.timestamp|date }}</span>
+                            </a>
+                            {% endfor %}
+                            
+                        </div>
+
+
+                        <div class="dx-widget dx-box dx-box-decorated">
+                            <div class="dx-widget-title">
+                                Latest Forum Topics
+                            </div>
+                            {% for topics in latest_topics %}
+                            <a href="{% url 'topic-detail' topics.id %}" class="dx-widget-link">
+                                <span class="dx-widget-link-text">{{ topics.title }}</span>
+                                <span class="dx-widget-link-date">{{ topics.date_created|date }}</span>
+                            </a>
+                            {% endfor %}
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

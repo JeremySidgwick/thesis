@@ -1,0 +1,433 @@
+[
+{
+  "model": "authentication.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$dzv088nFqM2bpP7nEUX4YW$CDzsBBj7aOQGtttGQ76RN2pkIln4IaVKkxOv2RgQ/Is=",
+    "last_login": "2024-12-03T13:47:19.904Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@admin.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2024-11-28T15:00:02Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$ZHJnRcl58qMHBCZC4qyxFe$0Val5sllTS8gYSOapjkca6GgBDFF2nV4DKA+pmJvubc=",
+    "last_login": "2024-11-29T13:53:44.203Z",
+    "is_superuser": false,
+    "username": "verif",
+    "first_name": "v",
+    "last_name": "e",
+    "email": "verif@c.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-11-29T13:47:19.272Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$P4Cq2wi9X68zqNHlLyBAUk$IPtVXzK5rjuvFQW41c9Dq1FlUhpK2xAUGa1KbzzyTCY=",
+    "last_login": "2024-12-03T13:45:21.919Z",
+    "is_superuser": false,
+    "username": "tran",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-12-03T13:45:21.381Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$3jLBHr0tiTRmjvxLGbZ304$RgddY/PeS/1pBYofQ1KKo6seJHCjYuNgkOZeX46yWgY=",
+    "last_login": "2024-12-03T13:45:32.375Z",
+    "is_superuser": false,
+    "username": "visi",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-12-03T13:45:31.842Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "authentication.user",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$XR6yKjZx2vGvIyV8IbmUSq$EpCXLiveIK7KNNKMo0FVd2l0PA60SDpefMHUyMg9qgU=",
+    "last_login": "2024-12-03T13:47:07.304Z",
+    "is_superuser": false,
+    "username": "block",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-12-03T13:47:06.787Z",
+    "completed_tasks": 0,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "crowdsourcing.project",
+  "pk": 5,
+  "fields": {
+    "name": "Name 1",
+    "description": "description du projet 1"
+  }
+},
+{
+  "model": "crowdsourcing.project",
+  "pk": 6,
+  "fields": {
+    "name": "Name 2",
+    "description": "description du projet 2"
+  }
+},
+{
+  "model": "crowdsourcing.project",
+  "pk": 7,
+  "fields": {
+    "name": "Name 3",
+    "description": "Description du projet 3"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 43,
+  "fields": {
+    "image": "adriaen-vits-october-1523.jpg",
+    "project": 5,
+    "status": "to_transcribe",
+    "name": "adriaen"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 44,
+  "fields": {
+    "image": "aerts-mersueten-july-1523.jpg",
+    "project": 5,
+    "status": "to_transcribe",
+    "name": "aerts m"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 45,
+  "fields": {
+    "image": "aert-vander-horst-august-1503.jpg",
+    "project": 5,
+    "status": "to_transcribe",
+    "name": "aert v"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 46,
+  "fields": {
+    "image": "conrard-de-blanier-1504.jpg",
+    "project": 5,
+    "status": "to_transcribe",
+    "name": "conrad"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 47,
+  "fields": {
+    "image": "francois-rozart-may_1544.jpg",
+    "project": 5,
+    "status": "to_transcribe",
+    "name": "rozart"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 48,
+  "fields": {
+    "image": "francois-speeckaert-april-1549.jpg",
+    "project": 5,
+    "status": "to_transcribe",
+    "name": "francois"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 49,
+  "fields": {
+    "image": "adriaen-vits-october-1523_emAbh61.jpg",
+    "project": 6,
+    "status": "to_transcribe",
+    "name": "adrian"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 50,
+  "fields": {
+    "image": "aerts-mersueten-july-1523_HzHUBWD.jpg",
+    "project": 6,
+    "status": "to_transcribe",
+    "name": "aets m"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 51,
+  "fields": {
+    "image": "aert-vander-horst-august-1503_SJUM3ox.jpg",
+    "project": 6,
+    "status": "to_transcribe",
+    "name": "aert v"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 52,
+  "fields": {
+    "image": "conrard-de-blanier-1504_BZGs9SG.jpg",
+    "project": 6,
+    "status": "to_transcribe",
+    "name": "conrad"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 53,
+  "fields": {
+    "image": "francois-rozart-may_1544_4lMWWnH.jpg",
+    "project": 6,
+    "status": "to_transcribe",
+    "name": "rozart"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 54,
+  "fields": {
+    "image": "francois-speeckaert-april-1549_Ffce6Ma.jpg",
+    "project": 6,
+    "status": "to_transcribe",
+    "name": "francois"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 55,
+  "fields": {
+    "image": "adriaen-vits-october-1523_6K0qb2E.jpg",
+    "project": 7,
+    "status": "to_transcribe",
+    "name": "adriaen"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 56,
+  "fields": {
+    "image": "aerts-mersueten-july-1523_qPOsaXo.jpg",
+    "project": 7,
+    "status": "to_transcribe",
+    "name": "aert m"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 57,
+  "fields": {
+    "image": "aert-vander-horst-august-1503_EF35xFU.jpg",
+    "project": 7,
+    "status": "to_transcribe",
+    "name": "aert v"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 58,
+  "fields": {
+    "image": "conrard-de-blanier-1504_7QFHtOG.jpg",
+    "project": 7,
+    "status": "to_transcribe",
+    "name": "conrad"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 59,
+  "fields": {
+    "image": "francois-rozart-may_1544_FfExHIV.jpg",
+    "project": 7,
+    "status": "to_transcribe",
+    "name": "rozart"
+  }
+},
+{
+  "model": "crowdsourcing.document",
+  "pk": 60,
+  "fields": {
+    "image": "francois-speeckaert-april-1549_yS9g77i.jpg",
+    "project": 7,
+    "status": "to_transcribe",
+    "name": "francois"
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 10,
+  "fields": {
+    "user": 1,
+    "project": 5,
+    "role": "manager",
+    "last_participation": "2024-12-03T13:43:13Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 11,
+  "fields": {
+    "user": 1,
+    "project": 6,
+    "role": "manager",
+    "last_participation": "2024-12-03T13:43:23Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 12,
+  "fields": {
+    "user": 1,
+    "project": 7,
+    "role": "manager",
+    "last_participation": "2024-12-03T13:43:33Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 13,
+  "fields": {
+    "user": 7,
+    "project": 5,
+    "role": "verifier",
+    "last_participation": "2024-12-03T13:44:10Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 14,
+  "fields": {
+    "user": 7,
+    "project": 6,
+    "role": "verifier",
+    "last_participation": "2024-12-03T13:44:21Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 15,
+  "fields": {
+    "user": 7,
+    "project": 7,
+    "role": "verifier",
+    "last_participation": "2024-12-03T13:44:34Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 16,
+  "fields": {
+    "user": 10,
+    "project": 5,
+    "role": "transcriber",
+    "last_participation": "2024-12-03T13:46:05Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 17,
+  "fields": {
+    "user": 10,
+    "project": 6,
+    "role": "transcriber",
+    "last_participation": "2024-12-03T13:46:15Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 18,
+  "fields": {
+    "user": 10,
+    "project": 7,
+    "role": "transcriber",
+    "last_participation": "2024-12-03T13:46:26Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 19,
+  "fields": {
+    "user": 12,
+    "project": 5,
+    "role": "Block",
+    "last_participation": "2024-12-03T13:47:27Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 20,
+  "fields": {
+    "user": 12,
+    "project": 6,
+    "role": "Block",
+    "last_participation": "2024-12-03T13:47:37Z",
+    "participation_amount": 0
+  }
+},
+{
+  "model": "crowdsourcing.userproject",
+  "pk": 21,
+  "fields": {
+    "user": 12,
+    "project": 7,
+    "role": "Block",
+    "last_participation": "2024-12-03T13:47:47Z",
+    "participation_amount": 0
+  }
+}
+]

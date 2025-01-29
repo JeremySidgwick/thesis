@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+       {% for project in projects %}
+            <a style="height: 100px" class="btn" href="/project/{{ project.id }}">Projet {{ project.name }}</a>
+        {% endfor %}
+        
+{% endblock %}

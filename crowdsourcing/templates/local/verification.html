@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div id="left_box">
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    {% include "local/module_zoom.html" %}
+
+</div>
+<div id="right_box">
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+
+
+            {% for rectangle in transcription_data %}
+
+                <div style="border: 1px solid black;display: flex">
+                    {# left text part#}
+                    <div style="width: 85%">
+                        {% for subtask in rectangle.subtasks %}
+                            <p>{{ subtask.text}}  </p>
+                        {% endfor %}
+                    </div>
+
+                    {# right buttons part#}
+                    <div style="float: right;width: 25%">
+                        <button type="button" href="{% url 'user-post' type='r' id=rectangle.rectangle_id %}"><i style="font-size: 25px" class="fa fa-commenting" aria-hidden="true"></i></button>
+
+                        {% if rectangle.done %}
+                            <i class="fa fa-check-square-o" style="font-size: 25px"></i>
+                        {% else %}
+                            <button type="button" class="edit-button toggle-button" data-id="edit-{{ rectangle.rectangle_id }}" data-hide-id="delete-{{ rectangle.rectangle_id }}">
+                            <i class="fa fa-pencil" aria-hidden="true" style="font-size: 25px"></i>
+                        </button>
+
+                            <div style="border: solid">
+                            <label for="vehicle1"> delete</label>
+                            <input type="checkbox" name="del_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}">
+
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+
+        {# Popup edit #}
+        <div id="edit-{{ rectangle.rectangle_id }}" class="popup edit-div" style="display: none;">
+            <label for="rect_{{ rectangle.rectangle_id }}">Proposer une autre traduction pour ce rectangle:</label>
+            <br>
+            <input type="text" name="rect_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}" value="{{ rectangle.current }}" onclick="buttonclick(this)">
+        </div>
+
+
+        {# Popup delete #}
+        <div id="delete-{{ rectangle.rectangle_id }}" class="popup delete-div" style="display: none;">
+            <p>Supprimer ce rectangle</p>
+        </div>
+
+            {% endfor %}
+
+            <input name='submit' type="submit"  value="Finir la vérification">
+            <input name="save" type="submit" formnovalidate value="Sauvegarder la progression"> {# submit for review   #}
+
+        </form>
+        <br>
+    <a target="_blank" href="{% url 'user-post' type='d' id=request.path|slice:"14:-1" %}" class="feedbackButton"><i class="fa fa-commenting" aria-hidden="true"></i>Forum du document</a>
+    </div>
+
+<script>
+    var canvas = new fabric.Canvas('canvas');
+    var rectangles = [];  // Array to store all rectangle coordinates
+    var image;
+
+    // Load the background image
+    fabric.Image.fromURL("{{ image.url }}", function(img) {
+        canvas.setWidth(img.width);
+        canvas.setHeight(img.height);
+        img.set({ selectable: false });
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+        image = img
+        // Draw existing rectangles on the image
+        const existingRectangles = {{ rectangles_data|safe }};  // Get rectangles from Django
+        existingRectangles.forEach(function(data) {
+            const rect = new fabric.Rect({
+                left: data.x,
+                top: data.y,
+                width: data.width,
+                height: data.height,
+                angle: data.angle,
+                fill: 'rgba(0,0,255,0.1)',
+                selectable: false,
+                rectid: data.id,
+                moved:false
+                {#TODO check dans les autre fichier si c'est uile'#}
+            });
+            canvas.add(rect);
+            rectangles.push(rect);
+        });
+    });
+
+    function toggleDivVisibility() {
+      const checkbox = document.getElementById('toggleSwitch');
+      const div = document.getElementById('toggleDiv');
+      const input = div.querySelector('input[type="text"]'); // Sélectionne l'input à l'intérieur du div
+
+      if (checkbox.checked) {
+        div.style.display = 'block'; // Affiche le div
+      } else {
+        div.style.display = 'none'; // Masque le div
+        if (input) {
+          input.value = ''; // Vide l'input
+        }
+      }
+    }
+
+    function toggleDivVisibility2() {
+      const checkbox = document.getElementById('toggleSwitch2');
+      const div = document.getElementById('toggleDiv2');
+
+      if (checkbox.checked) {
+        div.style.display = 'block'; // Affiche le div
+      } else {
+        div.style.display = 'none'; // Masque le div
+
+      }
+    }
+
+
+
+// Fonction pour initialiser l'état au chargement de la page
+function initializeToggleState() {
+  const checkbox = document.getElementById('toggleSwitch');
+  const div = document.getElementById('toggleDiv');
+  const input = div.querySelector('input[type="text"]');
+
+  if (input && input.value.trim() !== '') {
+    checkbox.checked = true; // Coche le switch
+    div.style.display = 'block'; // Affiche le div
+  } else {
+    checkbox.checked = false; // Décoche le switch
+    div.style.display = 'none'; // Masque le div
+  }
+}
+
+// Ajoutez un écouteur pour exécuter la fonction lorsque la page est chargée
+document.addEventListener('DOMContentLoaded', initializeToggleState);
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleButtons = document.querySelectorAll(".toggle-button");
+
+    toggleButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const toggleDivId = this.getAttribute("data-id"); // ID of the div to show/hide
+            const hideDivId = this.getAttribute("data-hide-id"); // ID of the div to hide
+
+            const toggleDiv = document.getElementById(toggleDivId);
+            const hideDiv = document.getElementById(hideDivId);
+
+            // Find the input inside the "edit" div
+            const editInput = document.querySelector(`#edit-${this.getAttribute("data-id").split('-')[1]} input`);
+
+            if (toggleDiv) {
+                // Check if the toggle div is currently visible
+                const isCurrentlyVisible = toggleDiv.style.display === "block";
+
+                // Toggle visibility of the target div
+                toggleDiv.style.display = isCurrentlyVisible ? "none" : "block";
+
+                // Hide the other div
+                if (hideDiv) {
+                    hideDiv.style.display = "none";
+                }
+
+                {#// If this is the "trash" button, set the input value to -1, otherwise reset to 0#}
+                {#if (editInput) {#}
+                {#    editInput.value = !isCurrentlyVisible ? "-2" : "-1";#}
+                {#    const delInput = document.querySelector(`#delete-${this.getAttribute("data-id").split('-')[1]} input`);#}
+                {#    console.log(3,delInput)#}
+
+
+                {#  #}
+
+            }
+        });
+    });
+});
+
+
+
+
+
+
+
+</script>
+{% endblock %}
