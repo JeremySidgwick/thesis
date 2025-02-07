@@ -9,7 +9,7 @@
         <canvas id="canvas"></canvas>
     </div>
 
-    {% include "local/module_zoom.html" %}
+{#    {% include "local/module_zoom.html" %}#}
 
 </div>
 <div id="right_box">
@@ -29,7 +29,7 @@
 
                     {# right buttons part#}
                     <div style="float: right;width: 25%">
-                        <button type="button" href="{% url 'user-post' type='r' id=rectangle.rectangle_id %}"><i style="font-size: 25px" class="fa fa-commenting" aria-hidden="true"></i></button>
+                        <a type="button" href="{% url 'user-post' type='r' id=rectangle.rectangle_id %}"><i style="font-size: 25px" class="fa fa-commenting" aria-hidden="true"></i></a>
 
                         {% if rectangle.done %}
                             <i class="fa fa-check-square-o" style="font-size: 25px"></i>
@@ -39,7 +39,7 @@
                         </button>
 
                             <div style="border: solid">
-                            <label for="vehicle1"> delete</label>
+                            <label for="vehicle1"> delete rectangle</label>
                             <input type="checkbox" name="del_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}">
 
                             </div>
@@ -50,7 +50,7 @@
 
         {# Popup edit #}
         <div id="edit-{{ rectangle.rectangle_id }}" class="popup edit-div" style="display: none;">
-            <label for="rect_{{ rectangle.rectangle_id }}">Proposer une autre traduction pour ce rectangle:</label>
+            <label for="rect_{{ rectangle.rectangle_id }}">uggest another translation for this rectangle:</label>
             <br>
             <input type="text" name="rect_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}" value="{{ rectangle.current }}" onclick="buttonclick(this)">
         </div>
@@ -58,17 +58,17 @@
 
         {# Popup delete #}
         <div id="delete-{{ rectangle.rectangle_id }}" class="popup delete-div" style="display: none;">
-            <p>Supprimer ce rectangle</p>
+            <p>Delete this rectangle</p>
         </div>
 
             {% endfor %}
 
-            <input name='submit' type="submit"  value="Finir la vérification">
-            <input name="save" type="submit" formnovalidate value="Sauvegarder la progression"> {# submit for review   #}
+            <input name='submit' type="submit"  value="Finish verification">
+            <input name="save" type="submit" formnovalidate value="Save progress"> {# submit for review   #}
 
         </form>
         <br>
-    <a target="_blank" href="{% url 'user-post' type='d' id=request.path|slice:"14:-1" %}" class="feedbackButton"><i class="fa fa-commenting" aria-hidden="true"></i>Forum du document</a>
+    <a target="_blank" href="{% url 'user-post' type='d' id=request.path|slice:"14:-1" %}" class="feedbackButton"><i class="fa fa-commenting" aria-hidden="true"></i>Forum of the document</a>
     </div>
 
 <script>
@@ -76,15 +76,17 @@
     var rectangles = [];  // Array to store all rectangle coordinates
     var image;
 
-    // Load the background image
-    fabric.Image.fromURL("{{ image.url }}", function(img) {
-        canvas.setWidth(img.width);
-        canvas.setHeight(img.height);
-        img.set({ selectable: false });
-        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        image = img
-        // Draw existing rectangles on the image
-        const existingRectangles = {{ rectangles_data|safe }};  // Get rectangles from Django
+    fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
+            canvas.backgroundImage = img;
+            img.canvas = canvas;
+            {#img.set({ selectable: false });#}
+
+            canvas.setWidth(img.width);
+            canvas.setHeight(img.height);
+            canvas.requestRenderAll()
+        })
+
+    const existingRectangles = {{ rectangles_data|safe }};  // Get rectangles from Django
         existingRectangles.forEach(function(data) {
             const rect = new fabric.Rect({
                 left: data.x,
@@ -95,13 +97,38 @@
                 fill: 'rgba(0,0,255,0.1)',
                 selectable: false,
                 rectid: data.id,
-                moved:false
                 {#TODO check dans les autre fichier si c'est uile'#}
             });
-            canvas.add(rect);
-            rectangles.push(rect);
+        canvas.add(rect);
         });
-    });
+    // Load the background image
+    {#fabric.Image.fromURL("{{ image.url }}", function(img) {#}
+    {#    canvas.backgroundImage = img;#}
+    {#    img.canvas = canvas;#}
+    {#    canvas.setWidth(img.width);#}
+    {#    canvas.setHeight(img.height);#}
+    {#    canvas.requestRenderAll()#}
+    {#    img.set({ selectable: false });#}
+        {#canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));#}
+        {#image = img#}
+    {#    // Draw existing rectangles on the image#}
+    {#    const existingRectangles = {{ rectangles_data|safe }};  // Get rectangles from Django#}
+    {#    existingRectangles.forEach(function(data) {#}
+    {#        const rect = new fabric.Rect({#}
+    {#            left: data.x,#}
+    {#            top: data.y,#}
+    {#            width: data.width,#}
+    {#            height: data.height,#}
+    {#            angle: data.angle,#}
+    {#            fill: 'rgba(0,0,255,0.1)',#}
+    {#            selectable: false,#}
+    {#            rectid: data.id,#}
+                {#TODO check dans les autre fichier si c'est uile'#}
+    {#        });#}
+    {#        canvas.add(rect);#}
+    {#        rectangles.push(rect);#}
+    {#    });#}
+
 
     function toggleDivVisibility() {
       const checkbox = document.getElementById('toggleSwitch');
@@ -200,6 +227,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+
+
+
+
+
+
+
+        canvas.on('mouse:down', function (opt) {
+            var evt = opt.e;
+            if (evt.altKey === true) {
+                this.isDragging = true;
+                this.selection = false;
+                this.lastPosX = evt.clientX;
+                this.lastPosY = evt.clientY;
+            }
+        });
+        canvas.on('mouse:move', function (opt) {
+            if (this.isDragging) {
+                var e = opt.e;
+                var vpt = this.viewportTransform;
+                vpt[4] += e.clientX - this.lastPosX;
+                vpt[5] += e.clientY - this.lastPosY;
+                this.requestRenderAll();
+                this.lastPosX = e.clientX;
+                this.lastPosY = e.clientY;
+            }
+        });
+        canvas.on('mouse:up', function (opt) {
+            // on mouse up we want to recalculate new interaction
+            // for all objects, so we call setViewportTransform
+            this.setViewportTransform(this.viewportTransform);
+            this.isDragging = false;
+            this.selection = true;
+        });
+
+
+        canvas.on('mouse:wheel', function (opt) {
+                var evt = opt.e;
+
+                var delta = opt.e.deltaY;
+                var zoom = canvas.getZoom();
+                console.log(zoom)
+                zoom *= 0.999 ** delta;
+                if (zoom > 5) zoom = 5;
+                if (zoom < 0.1) zoom = 0.1;
+                canvas.zoomToPoint({x: opt.e.offsetX, y: opt.e.offsetY}, zoom);
+                opt.e.preventDefault();
+            }
+        );
 
 
 

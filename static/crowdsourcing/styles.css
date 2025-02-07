@@ -21,9 +21,9 @@ nav a {
 }
 
 #main{
-    padding: 30px;
     width: 100%;
     display: flex;
+
  }
 
  #left_box{
@@ -33,10 +33,10 @@ nav a {
 
  #right_box{
      margin: 10px;
-     width: calc(100% * 0.30);
+     width: calc(100% * 0.35);
      border: 1px solid #8C8579;
-     max-height: 100vh;
-     overflow-y: auto;
+     max-height: 80vh;
+     overflow-y: scroll;
      overflow-x: hidden;
 
 
@@ -44,11 +44,11 @@ nav a {
 
 #canvas-container{
     width: 100%;
-    height: 550px;
-    overflow: auto;
+    height: 80vh;
+    overflow: hidden;
+
     border: 1px solid #8C8579;
 }
-
 
 
 

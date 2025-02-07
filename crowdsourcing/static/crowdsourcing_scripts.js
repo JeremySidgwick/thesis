@@ -13,6 +13,10 @@ function buttonclick(ctx) {
         }
         input_id = ctx.name.split('_')[1]
         var object = canvas.getObjects().find(obj => obj.rectid == input_id);
+        var prev_object = canvas.getObjects().find(obj => obj.rectid == previousInput);
+        if(prev_object){
+            object.set('fill', 'rgba(0,0,255,0.2)');
+        }
         if (object) {
           object.set('fill', 'rgba(0,255,0,0.2)');
           canvas.renderAll();

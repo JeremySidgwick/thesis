@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div style="margin: 30px">
+
+    <h1>Help page</h1>
+
+
+        <h2>navigation on the image</h2>
+        <p>To navigate around the image, you can zoom in and out with the mouse wheel<br> To move around: hold down the alt key on the keyboard and move the mouse with the left-click pressed.</p>
+
+        <h2>How to transcript</h2>
+        <p>The first step in transcription is to label each line separately to allow the work to be segmented and help ia learning. Once you have created a few rectangles, click on the submit rectangle button (bottom left) to save the rectangles and add the corresponding text boxes.
+        Once the rectangles have been saved (rectangles will turn blue), you can transcribe each rectangle in the corresponding text zone on the right part.
+        When you have finished, you can either save your progress or finish transcribing to send the document to the verification phase.
+        <br>
+        <strong>Important</strong>: always follow the following order 1) create the rectangle 2) save the rectangles 3) transcribe the sentences 4)save the progress, so as not to lose any progress.
+        </p>
+
+        <video width="610" height="360" controls loop muted>
+{#          <source src="{{ MEDIA_URL }}demo.mp4" type="video/mp4"></source>#}
+{#              <source src="{% media "demo.mp4" %}" type="video/mp4"> </source>#}
+            <source src="{% static 'demo.mp4' type='video/mp4'%}">
+        Your browser does not support the video tag.
+        </video>
+
+
+
+    <h2>Verification part</h2>
+For verification, the verifier can do 4 things for each rectangle :
+<ul>
+
+<li>do nothing: this means that he accepts the transcription. This rectangle will be validated and can no longer be modified.</li>
+<li>delete the rectangle: permanently delete the rectangle if it does not correspond to a line</li>
+<li>edit the text: by clicking on the pencil, the checker can propose another transcription. This step will require a 2nd check.</li>
+<li>Access the forum: by clicking on the icon, the user can access or create a forum linked to this rectangle or document.</li>
+</ul>
+
+        The checker can save their progress or finish the check to complete the task.
+
+    </div>
+
+
+
+
+
+{% endblock %}

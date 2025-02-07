@@ -33,6 +33,7 @@ urlpatterns = [
     # others
     path('save_rectangles/', views.save_rectangles, name='save_rectangles'),
     path('login/', auth_views.login_page, name='login'),
+    path('help/', views.help, name='help'),
     path('logout/', auth_views.logout_user, name='logout'),
     path('signup/', auth_views.signup_page, name='signup'),
     path('', include('forum.urls')),

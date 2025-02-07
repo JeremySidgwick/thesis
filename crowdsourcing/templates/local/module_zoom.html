@@ -9,34 +9,38 @@ Module qui permet d'avoir des boutons zoom in out et reset pour le canvas
 </div>
 
 
-<script>
-    // Zoom functionality
-    var zoomLevel = 1; // Initial zoom level
+<script>// Initialize zoom level
 
-    // Zoom in
-    document.getElementById('zoom-in').addEventListener('click', function () {
-        zoomLevel += 0.1; // Increase zoom level
-        adjustCanvasSize(zoomLevel);
-    });
+let zoomLevel = 1;
 
-    // Zoom out
-    document.getElementById('zoom-out').addEventListener('click', function () {
-        zoomLevel = Math.max(0.1, zoomLevel - 0.1); // Decrease zoom, but not below 0.1
-        adjustCanvasSize(zoomLevel);
-    });
+// Zoom in
+document.getElementById('zoom-in').addEventListener('click', function () {
+    console.log('in')
+    zoomLevel += 0.1; // Increase zoom level
+    console.log('in')
+    applyZoom(zoomLevel);
+});
 
-    // Reset zoom
-    document.getElementById('reset-zoom').addEventListener('click', function () {
-        adjustCanvasSize(1);
-    });
+// Zoom out
+document.getElementById('zoom-out').addEventListener('click', function () {
+    zoomLevel = Math.max(0.1, zoomLevel - 0.1); // Prevent zoom level from going below 0.1
+    applyZoom(zoomLevel);
+});
 
-    function adjustCanvasSize(zoom) {
-        // Calculer la nouvelle taille
-        canvas.setWidth(image.width * zoom);
-        canvas.setHeight(image.height * zoom);
-        canvas.setZoom(zoom);
-        canvas.renderAll();
-    }
+// Reset zoom
+document.getElementById('reset-zoom').addEventListener('click', function () {
+    zoomLevel = 1;
+    applyZoom(zoomLevel);
+});
+
+// Apply zoom correctly
+function applyZoom(zoom) {
+    {#if (!image) return; // Ensure the image is loaded before zooming#}
+
+    canvas.setZoom(zoom);
+    canvas.requestRenderAll();
+}
+
 </script>
 
 {% comment %}    canvas.on('mouse:wheel', function (opt) {

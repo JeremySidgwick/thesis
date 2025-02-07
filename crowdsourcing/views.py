@@ -1,4 +1,5 @@
 import csv
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponseNotFound, HttpResponse
@@ -223,18 +224,23 @@ class TranscriptionPage(View):
 #     })
 
 def save_rectangles(request):
+
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
             doc_id = data.get('document')
             rectangles = data.get('rectangles', [])
-            image = Document.objects.get(id=doc_id)
+            print("rectangles recu du front",rectangles)
+            doc = Document.objects.get(id=doc_id)
+            registered_rectangles = list(Rectangle.objects.filter(document=doc))
 
+            existing_id_rectangles=[]
             # Process each rectangle data to update or create
             for rect_data in rectangles:
                 rect_id = rect_data.get('rectid')
 
                 if rect_id !=-1:
+                    existing_id_rectangles.append(int(rect_id))
                     # Update existing rectangle
                     rect = Rectangle.objects.get(id=rect_id)
                     rect.x = rect_data['x']
@@ -246,13 +252,18 @@ def save_rectangles(request):
                 else:
                     # Create new rectangle
                     Rectangle.objects.create(
-                        document=image,
+                        document=doc,
                         x=rect_data['x'],
                         y=rect_data['y'],
                         width=rect_data['width'],
                         height=rect_data['height'],
                         angle=rect_data['angle']
                     )
+
+            for i in registered_rectangles:
+                if(i.id not in existing_id_rectangles):
+                    print("del",i,i.id)
+                    i.delete()
 
             return JsonResponse({'status': 'success'})
         except Exception as e:
@@ -684,3 +695,7 @@ def export_data(request,type,id):
     else:
         return HttpResponseForbidden()
     return response
+
+
+def help(request):
+    return render(request, 'local/help.html')
