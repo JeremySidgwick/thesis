@@ -81,7 +81,7 @@ class TranscriptionPage(View):
 
 
         return render(request, self.template_name, {
-            'image': image,
+            'document': document,
             'rectangles': rectangles_data,
             'forms': forms,
         })
@@ -273,8 +273,16 @@ def save_rectangles(request):
 
 
 def main_page(request):
+    visible_projects=[]
+    hidden_projects=[]
     projects = Project.objects.all()
-    return render(request, 'local/main.html', {"projects":projects})
+    for project in projects:
+        if project.name.startswith("hidden|"):
+            hidden_projects.append(project)
+        else:
+            visible_projects.append(project)
+
+    return render(request, 'local/main.html', {"projects":visible_projects,"hidden_projects":hidden_projects})
 
 @login_required #TODO pas forcement mais faudrait etre co pour postuler
 def project_page(request,project_id):
@@ -699,3 +707,6 @@ def export_data(request,type,id):
 
 def help(request):
     return render(request, 'local/help.html')
+
+def about(request):
+    return render(request, 'local/about.html')

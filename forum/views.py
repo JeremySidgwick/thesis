@@ -49,7 +49,7 @@ def userPost(request,type,id):
                 topic.related_rectangle = Rectangle.objects.get(id=id)
 
             topic.save()
-            return redirect('home')
+            return redirect("/forum")
     else:
         if(type == 'd'):
             document = Document.objects.get(id=id)
@@ -64,6 +64,7 @@ def userPost(request,type,id):
 
     context = {'form':form}
     return render(request, 'user-post.html', context)
+
 
 @login_required(login_url='login')
 def postTopic(request, pk):

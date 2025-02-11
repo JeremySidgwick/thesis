@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 <div id="left_box">
 
     <div id="canvas-container">
         <canvas id="canvas"></canvas>
     </div>
-
-{#    {% include "local/module_zoom.html" %}#}
 
 </div>
 
@@ -57,12 +54,11 @@
         canvas.setWidth(img.width);
         canvas.setHeight(img.height);
         canvas.requestRenderAll()
-        {#img.set({ selectable: false });#}
-        {#canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));#}
-        {#image = img#}
-        // Draw existing rectangles on the image
+
+
     });
 
+    // Draw existing rectangles on the image
     const existingRectangles = {{ rectangles|safe }};  // Get rectangles from Django
         existingRectangles.forEach(function(data) {
             const rect = new fabric.Rect({
@@ -78,22 +74,15 @@
                 {#TODO check dans les autre fichier si c'est uile'#}
             });
 
-            rect.on('mousedown', function(event) {
-                console.log('Mousedown sur le rectangle !', event);
-                this.set('fill', 'rgba(0,255,255,0.5)'); // Change la couleur au clic
-                console.log(this)
-                buttonclick(this)
-
-                canvas.renderAll();
-            });
-            {#rect.on('mouseup', function(event) {#}
-            {#    console.log('Mouseup sur le rectangle !', event);#}
-            {#    this.set('fill', 'rgba(0,0,255,0.1)'); // Change la couleur au clic#}
+            {#rect.on('mousedown', function(event) {#}
+            {#    console.log('Mousedown sur le rectangle !', event);#}
+            {#    this.set('fill', 'rgba(0,255,255,0.5)'); // Change la couleur au clic#}
+            {#    buttonclick(this)#}
+            {##}
             {#    canvas.renderAll();#}
-
+            {# }); #}
 
             canvas.add(rect);
-            {#rectangles.push(rect);#}
         });
 
 
@@ -116,6 +105,17 @@
         }
       });
     }
+
+
+
+
+
+
+
+
+
+
+
 
     canvas.on('mouse:down', function (opt) {
         var evt = opt.e;
@@ -158,10 +158,8 @@
 
         canvas.on('mouse:wheel', function (opt) {
                 var evt = opt.e;
-
                 var delta = opt.e.deltaY;
                 var zoom = canvas.getZoom();
-                console.log(zoom)
                 zoom *= 0.999 ** delta;
                 if (zoom > 5) zoom = 5;
                 if (zoom < 0.1) zoom = 0.1;

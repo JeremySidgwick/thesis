@@ -5,9 +5,9 @@
         <div id="canvas-container">
             <canvas id="canvas"></canvas>
         </div>
-        {#        {% include "local/module_zoom.html" %}#}
-        <button id="submit" onclick="submitRectangles()">Save rectangles</button>
+
         <button id="add2">Add new rectangle</button>
+        <button id="submit" onclick="submitRectangles()">Save rectangles <i class="fa fa-floppy-o" aria-hidden="true"></i> </button>
 
     </div>
     <div id="right_box">
@@ -20,16 +20,19 @@
             {% for rect, form, text_value in forms %}
                 <div>
                     <label for="rect_{{ rect.id }}"></label>
+
                     <!-- Utilisez un champ de texte avec l'attribut "name" unique -->
                     <input type="text" id='a' name="rect_{{ rect.id }}" data-rect-id="{{ rect.id }}" required
                            value="{{ text_value }}" onclick="buttonclick(this)"
                            style="width: 90%"
                     >
+                    <a type="button" href="{% url 'user-post' type='r' id=rect.id %}"><i style="font-size: 25px" class="fa fa-commenting" aria-hidden="true"></i></a>
                 </div>
             {% endfor %}
+            <a target="_blank" href="{% url 'user-post' type='d' id=document.id %}" class="feedbackButton"><i class="fa fa-commenting" aria-hidden="true"></i>Forum of the document</a>
 
-            <input name='submit' type="submit" value="Submit to verification">
             <input name="save" type="submit" formnovalidate value="Save progression"> {# submit for review   #}
+            <input name='submit' type="submit" value="Submit to verification">
         </form>
     </div>
 
@@ -48,22 +51,14 @@
         const cloneImg = document.createElement('img');
         cloneImg.src = cloneIcon;
 
-        fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
+        fabric.FabricImage.fromURL("{{ document.image.url }}").then(function (img) {
             canvas.backgroundImage = img;
             img.canvas = canvas;
-            {#img.set({ selectable: false });#}
-
             canvas.setWidth(img.width);
             canvas.setHeight(img.height);
             canvas.requestRenderAll()
         })
-        // Load the background image
-        {#fabric.Image.fromURL("{{ image.url }}", function(img) {#}
-        {#    canvas.setWidth(img.width);#}
-        {#    canvas.setHeight(img.height);#}
-        {#    img.set({ selectable: false });#}
-        {#    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));#}
-        {#    image = img#}
+
         {#    // Draw existing rectangles on the image#}
         const existingRectangles = {{ rectangles|safe }};  // Get rectangles from Django
         console.log(existingRectangles)
@@ -77,7 +72,6 @@
                 fill: 'rgba(0,0,255,0.1)',
                 selectable: true,  // Allow rectangles to be moved or resized
                 rectid: data.id,
-                //moved:false
             });
             rect.controls.deleteControl = new fabric.Control({
                 x: 0.5,
@@ -123,7 +117,6 @@
                 };
             }
         });
-
 
         fabric.Object.prototype.transparentCorners = false;
         fabric.Object.prototype.cornerColor = 'blue';
@@ -257,79 +250,6 @@
                 opt.e.preventDefault();
             }
         );
-
-
-        {#// Event: Mouse down to start drawing the rectangle#}
-        {#canvas.on('mouse:down', function(o) {#}
-        {#    return#}
-        {#    if (isDrawing) return;#}
-        {#    if (canvas.getActiveObject()) {#}
-        {#        return;  // Exit if clicking on an existing rectangle#}
-        {#    }#}
-        {##}
-        {#    isDown = true;#}
-        {#    isDrawing = true;#}
-        {#    var pointer = canvas.getPointer(o.e);#}
-        {#    origX = pointer.x;#}
-        {#    origY = pointer.y;#}
-        {##}
-        {#    rect = new fabric.Rect({#}
-        {#        left: origX,#}
-        {#        top: origY,#}
-        {#        originX: 'left',#}
-        {#        originY: 'top',#}
-        {#        width: pointer.x - origX,#}
-        {#        height: pointer.y - origY,#}
-        {#        angle: 0,#}
-        {#        fill: 'rgba(255,0,0,0.25)',#}
-        {#        transparentCorners: false,#}
-        {#        rectid: -1,#}
-        {#        moved: false#}
-        {#    });#}
-        {#    rectangles.push(rect);#}
-        {#    canvas.add(rect);#}
-
-        {##}
-        {#// Event: Mouse move to resize the rectangle as we drag#}
-        {##}
-        {#canvas.on('mouse:move', function(o) {#}
-        {#    if (!isDown) return;#}
-        {#    var pointer = canvas.getPointer(o.e);#}
-        {#    if (origX > pointer.x) {#}
-        {##}
-        {#        rect.set({ left: Math.abs(pointer.x) });#}
-        {#    }#}
-        {#    if (origY > pointer.y) {#}
-        {#        rect.set({ top: Math.abs(pointer.y) });#}
-        {#    }#}
-        {#    //console.log('mouse:move resize',rect);#}
-        {#    rect.set({ width: Math.abs(origX - pointer.x) });#}
-        {#    rect.set({ height: Math.abs(origY - pointer.y) });#}
-        {#    rect.set({ moved: true });#}
-        {#    canvas.renderAll();#}
-
-        {##}
-        {#// Event: Mouse up to finalize the rectangle#}
-        {#canvas.on('mouse:up', function(o) {#}
-        {#    isDown = false;#}
-        {#    isDrawing = false;#}
-        {#    //submitRectangles();#}
-
-
-        {#document.addEventListener('keydown', function (event) {#}
-        {#    if (event.key === 'Delete' || event.key === 'Backspace') {#}
-        {#        // Get the active object (selected rectangle) on the canvas#}
-        {#        const activeObject = canvas.getActiveObject();#}
-        {##}
-        {#        if (activeObject && activeObject.type === 'rect') {#}
-        {#            // Remove the rectangle from the canvas#}
-        {#            canvas.remove(activeObject);#}
-        {#            canvas.renderAll();#}
-        {#            //submitRectangles();#}
-        {#        }#}
-        {#    }#}
-
-
 
         // Function to get current coordinates of all rectangles and submit them
         function submitRectangles() {

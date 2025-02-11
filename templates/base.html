@@ -11,8 +11,7 @@
     <script src="{% static 'crowdsourcing_scripts.js' %}"></script>
     <title>Archio</title>
     <link rel="stylesheet" href="{% static 'crowdsourcing/styles.css' %}" />
-{#    <link rel="stylesheet" href="{% static 'css/amdesk.min.css' %}" />#}
-{#    <link rel="stylesheet" href="{% static 'css/custom.css' %}" />#}
+
 </head>
 <body>
 
@@ -21,6 +20,7 @@
 <div id="main">
     {% block content %}{% endblock %}
 </div>
+
 {% include "footer.html" %}
 </body>
 
