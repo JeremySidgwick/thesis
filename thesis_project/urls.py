@@ -30,6 +30,7 @@ urlpatterns = [
     path('verification/<int:doc_id>/', views.VerificationPage.as_view(), name='verification_page'),
     path('completed/<int:doc_id>/',views.completed_page, name='completed_page'),
 
+
     # others
     path('save_rectangles/', views.save_rectangles, name='save_rectangles'),
     path('login/', auth_views.login_page, name='login'),
@@ -39,9 +40,10 @@ urlpatterns = [
     path('signup/', auth_views.signup_page, name='signup'),
     path('', include('forum.urls')),
 
-    path('export/<str:type>/<int:id>',views.export_data,name='export_data'),
+    path('export/<str:type>/<str:export>/<int:id>',views.export_data,name='export_data'),
 
-    path("upload/",views.upload_image,name='upload'),
+    path("preview/<int:doc_id>",views.preview_page,name='preview_page'),
+    path("upload/",views.FileFieldFormView.as_view(),name='upload'),
 
 ]
 

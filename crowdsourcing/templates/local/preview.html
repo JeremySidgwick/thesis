@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div style="width: 75%;margin: auto">
+
+    <h1>Preview of the document</h1>
+
+    <div id="canvas-container" style="height: 72vh">
+        <canvas id="canvas"></canvas>
+    </div>
+    </div>
+
+    <script>
+        const canvas = new fabric.Canvas('canvas');
+        var image;
+
+        // Load the background image
+        fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
+            canvas.backgroundImage = img;
+            img.canvas = canvas;
+            canvas.setWidth(img.width);
+            canvas.setHeight(img.height);
+            const canvasContainer = document.getElementById('canvas-container');
+            const height = canvasContainer.clientHeight;
+
+            canvas.zoomToPoint({x: 0, y: 0}, height/img.height);
+            canvas.requestRenderAll()
+        });
+
+    </script>
+    <script src="../../static/canvas_control.js"></script>
+
+{% endblock %}
+
+

@@ -1,32 +1,57 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-12 spacing">
-            <h1 class="text-center" style="margin-bottom:70px;">Search Result for <span class="q-term">{{ search_query }}</span></h1>
-            {% if q_count > 0 %}
-                <h2 class="text-center" style="margin-bottom:40px;"> 
-                    <span class="match-q">{{ q_count }}</span> Match{{ q_count | pluralize:"es" }} Found
-                </h2>
-                {% for topic in queryset %}
-                <div class="col-12 text-left">
-                    <a href="{% url 'topic-detail' topic.id %}">
-                        <h3 class="h4">{{ topic.title }}</h3>
-                    </a>
-                    <p class="text-muted">{{ topic.description }}</p>
-                </div>
-                {% endfor %}
-            {% else %}
-            <h2 class="text-center" style="margin-bottom:40px;"> 
-                <span class="no-match">No Match Found</span>
+    <div style="margin: auto;text-align: justify">
+
+
+        <h1 style="margin-bottom:50px;">Search Result for "<span>{{ search_query }}</span>"</h1>
+        {% if q_count > 0 %}
+            <h2 style="margin-bottom:40px;">
+                <span>{{ q_count }}</span> Match{{ q_count | pluralize:"es" }} Found
             </h2>
-            <p class="text-center">
-                <a class="btn btn-outline-info btn-lg" href="{% url 'home' %}" role="button">Back To Home</a>
-            </p>
-            
-            {% endif %}
-        </div>
+            <div>
+                <table class="forum-table">
+                    <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Views</th>
+                        <th>Answers</th>
+                        <th>Post Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for post in queryset %}
+                        <tr style="outline: thin solid #b6b6b6; border-radius: 10px;border-spacing: 30px;">
+                            <th>
+                                <a href="{% url 'topic-detail' post.id %}">{{ post.title|truncatechars:30 }}</a>
+                                <p>{{ post.description|truncatechars:50 }}</p>
+                            </th>
+                            <td>{{ post.topic_view_count }}</td>
+                            <td>{{ post.answer_count }}</td>
+
+                            <td>
+                                <div>
+                                    <p>by <span style="color:rgb(212, 59, 59);">{{ post.author }}</span>
+                                        <br><span>{{ post.date_created }}</span>
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+        {% else %}
+            <h2 style="margin-bottom:40px;">
+                <span>No Match Found</span>
+            </h2>
+
+        {% endif %}
+        <p>
+            <a class="btn" href="{% url 'forum' %}" role="button">Return to forum</a>
+        </p>
+
     </div>
-</div>
 {% endblock content %}

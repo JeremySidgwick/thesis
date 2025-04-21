@@ -1,6 +1,16 @@
-to delete
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload Image</button>
-</form>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div style="margin: 30px">
+
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Upload</button>
+        </form>
+
+    </div>
+
+{% endblock %}

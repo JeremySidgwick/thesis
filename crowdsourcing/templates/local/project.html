@@ -1,131 +1,191 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div style="width: 95%; margin: 30px">
+    <div style="width: 100%; margin: 30px; display: flex" >
 
+        <div class="left" style="width: 75%">
+            <div style="border-bottom: solid">
 
-        <div class="left" style="width: 70%">
-
-            <h1>Project : {{ project.name }}</h1>
-            <p>{{ project.description }}</p>
+                <h1>Project : {{ project.name }}</h1>
+                <p>{{ project.description }}</p>
+            </div>
 
             {% if to_continue|length > 0 %}
+                <div>
+
                 <h4>Resume document in progress</h4>
                 {% for document in to_continue %}
                     <div class="thumbnail-container">
                         <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
                         <div class="overlay">
                             {% if to_continue_type == 'transcription' %}
-                                <a href="/transcription/{{ document.id }}" class="btn">Transcribe</a>
-                            {% else %}
-                                <a href="/verification/{{ document.id }}" class="btn">Verify</a>
-                            {% endif %}
+                                <a href="{% url 'transcription_page' document.id %}" class="btn">Transcribe</a>
 
+                            {% else %}
+                                <a href="{% url 'verification_page' document.id %}" class="btn">Verify</a>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
+                </div>
 
             {% endif %}
 
             <div class="tab">
-                {% if role in "manager,verifier,transcriber" %}
-                    <button class="btn tablinks" onclick="opentab('to_transcribe')">documents to transcribe</button>
-                {% endif %}
-                {% if role in "manager,verifier" %}
-                    <button class="btn tablinks" onclick="opentab('to_verify')">documents to verify</button>
-                {% endif %}
-
+                <button class="btn tablinks" onclick="opentab('to_transcribe')">documents to transcribe</button>
+                <button class="btn tablinks" onclick="opentab('to_verify')">documents to verify</button>
                 <button class="btn tablinks" onclick="opentab('completed')">completed documents</button>
             </div>
 
 
 
+            {# === TRANSCRIPTION PART === #}
             <div id="to_transcribe" class="tabcontent" style="display: block">
+
                 <h4>Documents to be transcribed</h4>
-                {% for document in to_transcribe %}
-                    <div class="thumbnail-container">
-                        <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
-                        <div class="overlay">
-                            {% if to_continue|length == 0 %}
-                                <a href="/transcription/{{ document.id }}" class="btn">Transcribe</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
 
-                <h4>Documents currently being transcribed</h4>
+                {% for group_name,values_list in to_transcribe.items %}
+                    {% if group_name|length == 0 %}
+                        <p><u>Other archives</u></p>
+                    {% else %}
+                    <p><u>Archive: {{ group_name }} </u> </p>{# titre document global#}
+                    {% endif %}
+                    {% for document in values_list %}
+                        <div class="thumbnail-container"> {# ligne #}
 
-                {% for document in in_transcription %}
-                    <div class="thumbnail-container">
-                        <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
-                    </div>
-                {% endfor %}
-
-
-            </div>
-
-            <div id="to_verify" class="tabcontent">
-                {% if role == 'verifier' or role == 'manager' %}
-                    <h4>Documents to be verified</h4>
-                    {% for document in to_verify %}
-                        <div class="thumbnail-container">
                             <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
                             <div class="overlay">
-                                {% if to_continue|length == 0 %}
-                                    <a href="/verification/{{ document.id }}" class="btn">Vérifier</a>
+                                {% if to_continue|length == 0 %} {# si tache deja en cours pas de bouton#}
+                                    {% if role in "manager,verifier,transcriber" %}
+                                        <a href="{% url 'transcription_page' document.id %}" class="btn">Transcribe</a>
+                                    {% endif %}
+                                    <a href="{% url 'preview_page' document.id %}" class="btn" target="_blank">Preview</a>
                                 {% endif %}
                             </div>
                         </div>
                     {% endfor %}
-                    <h4>Documents currently being verified</h4>
+                {% endfor %}
 
-                    {% for document in in_verification %}
-                        <div class="thumbnail-container">
-                            <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
-                        </div>
+                <h4>Documents currently being transcribed</h4>
+                {%if in_transcription.items|length == 0 %}
+                    <p>No document is in transcription for the moment</p>
+                {% else %}
+                    {% for group_name,values_list in in_transcription.items %}
+                        {% for document in values_list  %}
+                            <div class="thumbnail-container">
+                                <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
+                                <div class="overlay"></div>
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-
                 {% endif %}
 
             </div>
 
-            <div id="completed" class="tabcontent">
-                <h4>Completed documents</h4>
-                {% for document in done %}
-                    <div class="thumbnail-container">
-                        <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
-                        <div class="overlay">
-                            <a href="/completed/{{ document.id }}" class="btn">Consult</a>
+            {# VERIFICATION PART #}
+            <div id="to_verify" class="tabcontent">
+
+                <h4>Documents to be verified</h4>
+                {% for group_name,values_list in to_verify.items %}
+                    {% if group_name|length == 0 %}
+                        <p><u>Other archives</u></p>
+                    {% else %}
+                    <p><u>Archive: {{ group_name }} </u> </p>{# titre document global#}
+                    {% endif %}
+                    {% for document in values_list %}
+                        <div class="thumbnail-container"> {# ligne #}
+
+                            <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
+                            <div class="overlay">
+                                {% if to_continue|length == 0 %} {# si tache deja en cours pas de bouton#}
+                                    {% if role in "manager,verifier" %}
+                                        <a href="{% url 'verification_page' document.id %}" class="btn">Verify</a>
+                                    {% endif %}
+                                    <a href="{% url 'preview_page' document.id %}" class="btn" target="_blank">Preview</a>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 {% endfor %}
 
+
+                <h4>Documents currently being verified</h4>
+                {%if in_verification.items|length == 0 %}
+                    <p>No document is in transcription for the moment</p>
+                {% else %}
+                    {% for group_name,values_list in in_verification.items %}
+                        {% for document in values_list  %}
+                            <div class="thumbnail-container">
+                                <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
+                                <div class="overlay"></div>
+                            </div>
+                        {% endfor %}
+
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+
+            {# CONSULTATION PART #}
+            <div id="completed" class="tabcontent">
+                <h4>Completed documents</h4>
+
+                {% for group_name,values_list in done.items %}
+                    {% if group_name|length == 0 %}
+                        <p><u>Other archives</u></p>
+                    {% else %}
+                        <p><u>Archive: {{ group_name }} </u> </p>{# titre document global#}
+                    {% endif %}
+                    {% for document in values_list %}
+                        <div class="thumbnail-container"> {# ligne #}
+
+                            <img src="{{ document.image.url }}" alt="Document Thumbnail" class="thumbnail" />
+                            <div class="overlay">
+                                <a href="{% url 'completed_page' document.id %}" class="btn">Consult</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
             </div>
 
         </div>
 
-        {#    TODO #}
-        <div class="right" style="display: none;border-left-style: solid">
+        <div class="right" style="width: 25%;padding: 10px">
 
-            {% if role == "manager" %}
-                <a class="btn" href="/panel/{{project.id}}">Panel admin</a>
-            {% endif %}
+            <div class="card">
+                {% if role == "manager" %}
+                    <h4>Access request</h4>
+                    {#    TODO #}
+                {% elif role == "visitor" %}
+                    <a class="btn">Request access to the project</a>
+                {% elif role == "candidate" %}
+                    <p>The request is being processed</p>
+                {% endif %}
+            </div>
 
-            {% if role == "visitor" %}
-                <a class="btn">Demander l'acces au projet</a>
-            {% endif %}
+            <div class="card">
+                <h4>Project status </h4>
+                <div class="progress-container">
+                    <div class="progress-bar bar4" style="width: {{progress_percent.new }}%" title="{{ progress.new }} documents not started"></div>
+                    <div class="progress-bar bar2" style="width: {{progress_percent.verification }}%" title="{{ progress.verification }} documents to verify"></div>
+                    <div class="progress-bar bar3" style="width: {{progress_percent.current }}%" title="{{ progress.current }} documents in progress"></div>
+                    <div class="progress-bar bar1" style="width: {{progress_percent.completed }}%" title="{{ progress.completed }} documents completed"></div>
+                </div>
+                <p>{{ progress.new }} Not Started | {{ progress.verification }} To Verify | {{ progress.current }} In Progress | {{ progress.completed }} Completed</p>
+                <p>Total Documents : {{ progress.total }} </p>
+            </div>
 
-            <h4>stat du projet</h4>
+            <div class="card" style="text-align: left;">
+                <h4>List of members: ({{members_list|length }} members)</h4>
+                {% for member in members_list %}
+                    <li>{{ member.user.username }}</li>
+                {% endfor %}
+            </div>
 
-            <ul> Liste des membres de {{ project.name }}
-                <li>A</li>
-                <li>B</li><li>C</li><li>D</li><li>E</li>
-            </ul>
         </div>
     </div>
 
     <script>
-
         function opentab(tab) {
             tabcontent = document.getElementById(tab);
             tabcontent.style.display='block'
@@ -142,7 +202,29 @@
                 }
             }
         }
-
     </script>
+    <style>
+        .progress-container {
+            width: 100%;
+            background-color: #eee;
+            border: solid;
+            border-width: 1px;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 30px;
+            display: flex;
+        }
+        .progress-bar {
+            height: 100%;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-weight: bold;
+        }
+        .bar1 { background-color: #acb3ff; }
+        .bar2 { background-color: #545cff; }
+        .bar3 { background-color: #232efd; }
+        .bar4 { background-color: #000bc6; }
+    </style>
 
 {% endblock %}

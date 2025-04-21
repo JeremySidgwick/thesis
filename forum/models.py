@@ -41,7 +41,7 @@ class Answer(models.Model):
     downvotes = models.ManyToManyField(User, blank=True, related_name='downvotes')
 
     def __str__(self):
-        return self.user_post.title
+        return self.content
     
     @property
     def upvotes_count(self):
@@ -49,7 +49,7 @@ class Answer(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True) #TODO a enlever et automatiser
+    # slug = models.SlugField(max_length=200, unique=True, null=True, blank=True) #TODO a enlever et automatiser
     content = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     thumbnail = models.ImageField(default="header.jpg", null=True, blank=True)

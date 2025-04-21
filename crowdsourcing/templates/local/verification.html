@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
 
 
@@ -8,10 +6,8 @@
     <div id="canvas-container">
         <canvas id="canvas"></canvas>
     </div>
-
-{#    {% include "local/module_zoom.html" %}#}
-
 </div>
+
 <div id="right_box">
         <form action="" method="post" novalidate>
             {% csrf_token %}
@@ -50,7 +46,7 @@
 
         {# Popup edit #}
         <div id="edit-{{ rectangle.rectangle_id }}" class="popup edit-div" style="display: none;">
-            <label for="rect_{{ rectangle.rectangle_id }}">uggest another translation for this rectangle:</label>
+            <label for="rect_{{ rectangle.rectangle_id }}">Suggest another transcription for this rectangle:</label>
             <br>
             <input type="text" name="rect_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}" value="{{ rectangle.current }}" onclick="buttonclick(this)">
         </div>
@@ -79,10 +75,13 @@
     fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
             canvas.backgroundImage = img;
             img.canvas = canvas;
-            {#img.set({ selectable: false });#}
 
             canvas.setWidth(img.width);
             canvas.setHeight(img.height);
+            const canvasContainer = document.getElementById('canvas-container');
+            const height = canvasContainer.clientHeight;
+
+            canvas.zoomToPoint({x: 0, y: 0}, height/img.height);
             canvas.requestRenderAll()
         })
 
@@ -178,12 +177,6 @@ function initializeToggleState() {
 document.addEventListener('DOMContentLoaded', initializeToggleState);
 
 
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const toggleButtons = document.querySelectorAll(".toggle-button");
 
@@ -225,60 +218,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-        canvas.on('mouse:down', function (opt) {
-            var evt = opt.e;
-            if (evt.altKey === true) {
-                this.isDragging = true;
-                this.selection = false;
-                this.lastPosX = evt.clientX;
-                this.lastPosY = evt.clientY;
-            }
-        });
-        canvas.on('mouse:move', function (opt) {
-            if (this.isDragging) {
-                var e = opt.e;
-                var vpt = this.viewportTransform;
-                vpt[4] += e.clientX - this.lastPosX;
-                vpt[5] += e.clientY - this.lastPosY;
-                this.requestRenderAll();
-                this.lastPosX = e.clientX;
-                this.lastPosY = e.clientY;
-            }
-        });
-        canvas.on('mouse:up', function (opt) {
-            // on mouse up we want to recalculate new interaction
-            // for all objects, so we call setViewportTransform
-            this.setViewportTransform(this.viewportTransform);
-            this.isDragging = false;
-            this.selection = true;
-        });
-
-
-        canvas.on('mouse:wheel', function (opt) {
-                var evt = opt.e;
-
-                var delta = opt.e.deltaY;
-                var zoom = canvas.getZoom();
-                console.log(zoom)
-                zoom *= 0.999 ** delta;
-                if (zoom > 5) zoom = 5;
-                if (zoom < 0.1) zoom = 0.1;
-                canvas.zoomToPoint({x: opt.e.offsetX, y: opt.e.offsetY}, zoom);
-                opt.e.preventDefault();
-            }
-        );
-
-
-
 </script>
+<script src="../../static/canvas_control.js"></script>
 {% endblock %}

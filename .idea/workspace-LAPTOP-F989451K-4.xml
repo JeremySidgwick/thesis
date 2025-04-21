@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4b606676-b80e-4044-993e-4a48a474f01b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/authentication/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/templates/base1.html" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/templates/base1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/templates/local/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/templates/local/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/templates/local/completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/templates/local/completed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/templates/local/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/templates/local/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/templates/local/module_zoom.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/templates/local/module_zoom.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/templates/local/project.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/templates/local/project.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/templates/local/transcription.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/templates/local/transcription.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/templates/local/verification.html" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/templates/local/verification.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crowdsourcing/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/crowdsourcing/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/forum/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/forum/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/blog-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/blog-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/blog-listing.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/blog-listing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/forum-main.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/forum-main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/search-result.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/search-result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/topic-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/topic-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/user-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/user-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/user-post.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/user-post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/templates/vote-section.html" beforeDir="false" afterPath="$PROJECT_DIR$/forum/templates/vote-section.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forum/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/forum/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/crowdsourcing/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/crowdsourcing/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/badge-doctor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/badge-user.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/header.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/pro_pic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/thesis_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesis_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/thesis_project/urls.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2oNdFc5KuUG0xUC7H9bwaAUGSOm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.thesis_project.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/OneDrive/Documents/UCL/1-MEMOIRE/thesis_project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OneDrive\Documents\UCL\1-MEMOIRE\thesis_project" />
+      <recent name="C:\Users\sidgw\PycharmProjects\thesis_project\draw\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OneDrive\Documents\UCL\1-MEMOIRE\thesis_project\crowdsourcing\static" />
+      <recent name="D:\OneDrive\Documents\UCL\1-MEMOIRE\thesis_project\crowdsourcing\templates\local" />
+      <recent name="C:\Users\sidgw\OneDrive\Documents\UCL\1-MEMOIRE\thesis_project\for" />
+      <recent name="C:\Users\sidgw\OneDrive\Documents\UCL\1-MEMOIRE\thesis_project" />
+      <recent name="C:\Users\sidgw\OneDrive\Documents\UCL\1-MEMOIRE\thesis_project\crowdsourcing" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="thesis_project" type="Python.DjangoServer" factoryName="Django server">
+      <module name="thesis_project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="thesis_project.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="localhost" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4b606676-b80e-4044-993e-4a48a474f01b" name="Changes" comment="" />
+      <created>1730713866916</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730713866916</updated>
+      <workItem from="1730713875663" duration="302000" />
+      <workItem from="1730715814187" duration="5113000" />
+      <workItem from="1730725799356" duration="802000" />
+      <workItem from="1730729333582" duration="5190000" />
+      <workItem from="1730805102255" duration="340000" />
+      <workItem from="1730805865323" duration="2953000" />
+      <workItem from="1730815949357" duration="1935000" />
+      <workItem from="1730882395255" duration="3161000" />
+      <workItem from="1730900657660" duration="2172000" />
+      <workItem from="1731057703006" duration="1277000" />
+      <workItem from="1731537775448" duration="256000" />
+      <workItem from="1731577018480" duration="5657000" />
+      <workItem from="1731593905546" duration="248000" />
+      <workItem from="1731923020845" duration="7071000" />
+      <workItem from="1731939160638" duration="8544000" />
+      <workItem from="1732005183527" duration="11367000" />
+      <workItem from="1732021220350" duration="8020000" />
+      <workItem from="1732099587019" duration="4053000" />
+      <workItem from="1732189739569" duration="90000" />
+      <workItem from="1732190646363" duration="887000" />
+      <workItem from="1732195849715" duration="6257000" />
+      <workItem from="1732264669260" duration="10288000" />
+      <workItem from="1732281533681" duration="7200000" />
+      <workItem from="1732629638153" duration="600000" />
+      <workItem from="1732630709312" duration="1044000" />
+      <workItem from="1732713075764" duration="896000" />
+      <workItem from="1732719111511" duration="403000" />
+      <workItem from="1732802923628" duration="606000" />
+      <workItem from="1732803545831" duration="1207000" />
+      <workItem from="1732805667775" duration="2589000" />
+      <workItem from="1732873919612" duration="955000" />
+      <workItem from="1732874955517" duration="27000" />
+      <workItem from="1732874989992" duration="6840000" />
+      <workItem from="1732885003787" duration="8918000" />
+      <workItem from="1733129572000" duration="8629000" />
+      <workItem from="1733146886840" duration="10877000" />
+      <workItem from="1733214977137" duration="15188000" />
+      <workItem from="1733389947518" duration="8151000" />
+      <workItem from="1733405215579" duration="4983000" />
+      <workItem from="1733424838480" duration="1317000" />
+      <workItem from="1733474118172" duration="22318000" />
+      <workItem from="1733733234366" duration="10752000" />
+      <workItem from="1733747738637" duration="4854000" />
+      <workItem from="1733762110690" duration="380000" />
+      <workItem from="1733776447008" duration="1318000" />
+      <workItem from="1733911715509" duration="2961000" />
+      <workItem from="1734001470685" duration="24000" />
+      <workItem from="1736500840294" duration="750000" />
+      <workItem from="1736604063822" duration="9756000" />
+      <workItem from="1736866740896" duration="1023000" />
+      <workItem from="1736939971379" duration="8327000" />
+      <workItem from="1737016669236" duration="433000" />
+      <workItem from="1737367234667" duration="14315000" />
+      <workItem from="1737401771721" duration="5000" />
+      <workItem from="1737464340694" duration="9566000" />
+      <workItem from="1737540811177" duration="10968000" />
+      <workItem from="1737974404537" duration="7549000" />
+      <workItem from="1738055006731" duration="149000" />
+      <workItem from="1738055946903" duration="12505000" />
+      <workItem from="1738142741759" duration="5016000" />
+      <workItem from="1738163600442" duration="595000" />
+      <workItem from="1738318258931" duration="8597000" />
+      <workItem from="1738576906568" duration="17167000" />
+      <workItem from="1738661883970" duration="11027000" />
+      <workItem from="1738753360891" duration="14818000" />
+      <workItem from="1738831053528" duration="15164000" />
+      <workItem from="1738879982628" duration="991000" />
+      <workItem from="1738921398399" duration="3409000" />
+      <workItem from="1738936057765" duration="2666000" />
+      <workItem from="1739011392456" duration="9330000" />
+      <workItem from="1739196099837" duration="18509000" />
+      <workItem from="1739263477082" duration="13754000" />
+      <workItem from="1739355419909" duration="6845000" />
+      <workItem from="1739376481642" duration="632000" />
+      <workItem from="1739446052282" duration="8314000" />
+      <workItem from="1739527143417" duration="14580000" />
+      <workItem from="1739789401824" duration="10681000" />
+      <workItem from="1739874749432" duration="12127000" />
+      <workItem from="1739960479894" duration="10326000" />
+      <workItem from="1740489950263" duration="2208000" />
+      <workItem from="1740516677657" duration="1811000" />
+      <workItem from="1740564250094" duration="2783000" />
+      <workItem from="1741599983005" duration="2838000" />
+      <workItem from="1741689888525" duration="9153000" />
+      <workItem from="1741783792001" duration="3160000" />
+      <workItem from="1741876497057" duration="2281000" />
+      <workItem from="1742207057711" duration="14973000" />
+      <workItem from="1742292707056" duration="9964000" />
+      <workItem from="1742826980664" duration="1793000" />
+      <workItem from="1742911440272" duration="2178000" />
+      <workItem from="1743240207868" duration="3841000" />
+      <workItem from="1743433373337" duration="3843000" />
+      <workItem from="1743509098752" duration="5115000" />
+      <workItem from="1743587957864" duration="16478000" />
+      <workItem from="1743671427755" duration="3616000" />
+      <workItem from="1743762169393" duration="3014000" />
+      <workItem from="1744011645743" duration="521000" />
+      <workItem from="1744016981111" duration="2042000" />
+      <workItem from="1744020248847" duration="28000" />
+      <workItem from="1744031987273" duration="7628000" />
+      <workItem from="1744098035366" duration="6427000" />
+      <workItem from="1744111499531" duration="11919000" />
+      <workItem from="1744188935393" duration="451000" />
+      <workItem from="1744191761687" duration="6886000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

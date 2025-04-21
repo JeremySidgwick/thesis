@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div  style="width: 75%;margin: auto">
+
+        <h1>{{ post_detail.title }}</h1>
+        <div style="margin: 35px 0">
+            {% if post_detail.thumbnail %}
+                <img src="{{ post_detail.thumbnail.url }}" style="max-height: 500px;" alt="{{ post_detail.title }}">
+            {% endif %}
+        </div>
+        <p>{{ post_detail.content|safe }}</p>
+        <p style="margin-top: 60px"><i>Written at: {{ post_detail.timestamp }} by Admin</i> </p>
+    </div>
+
+{% endblock content %}

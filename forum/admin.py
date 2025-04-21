@@ -3,15 +3,18 @@ from .models import *
 
 
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ("id","title",'slug')
+    list_display = ("id","title")
 
 admin.site.register(BlogPost, BlogPostAdmin)
 
 
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ("id","user_post",'user','content')
+admin.site.register(Answer,AnswerAdmin)
 
-admin.site.register(Answer)
+
+
 admin.site.register(TopicView)
-
 
 
 class UserPostAdmin(admin.ModelAdmin):

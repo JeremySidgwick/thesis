@@ -56,15 +56,17 @@ nav a {
 
 
 
+.forum-table{
+    outline: thin solid #b6b6b6; border-radius: 10px;border-spacing: 10px;
+}
 
 
 
 
 
-
-
-
-
+td, th{
+    padding: 15px
+}
 
 
 
@@ -161,7 +163,7 @@ nav a {
     transition: opacity 0.3s ease;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end; /*ou center*/
 }
 
 .thumbnail-container:hover .overlay {
@@ -179,7 +181,7 @@ nav a {
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease;
-    margin: 20px;
+    margin: 5px;
 }
 
 .btn:hover {
@@ -272,4 +274,11 @@ input:checked + .slider:before {
 
 
 
-
+div.card {
+    border-radius: 10px;
+    border: solid;
+    border-width: 1px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+}

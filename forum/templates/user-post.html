@@ -1,27 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="dx-main">
-    <div class="dx-box-1 pb-100 bg-grey-6">
-        <div class="container">
-            <div class="row vertical-gap md-gap">
-                <div class="col-lg-8">
-                    <h2 class="h4">Post A New Topic</h2>
-                    <p>ce post sera lié au document / au rectangle</p>
-                    <div class="dx-box mt-55">
-                        <form action="" method="POST" class="dx-form mt-50 mb-45">
-                            <div class="row vertical-gap">
-                                <div class="col-12">
-                                    {% csrf_token %}
-                                    {{ form }}
-                                    <input type="submit" class="dx-btn dx-btn-lg" value="Post">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    <div style="margin: auto;margin-top:30px">
+        <h2>Post A New Topic</h2>
+
+        {% if "/r/" in request.path %}
+            <p>This post will be linked to the specific rectangle</p>
+        {% else %}
+            <p>This post will be linked to the document</p>
+        {% endif %}
+
+        <form action="" method="POST" >
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Create topic">
+        </form>
     </div>
-</div>
+
 {% endblock content %}

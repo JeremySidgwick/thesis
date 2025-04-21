@@ -1,5 +1,4 @@
 # authentication/views.py
-
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.conf import settings
@@ -24,9 +23,8 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 return redirect('main_page')
-                message = f'Bonjour, {user.username}! Vous êtes connecté.'
             else:
-                message = 'Identifiants invalides.'
+                message = 'Invalid login details.'
     return render(
         request, 'login.html', context={'form': form, 'message': message})
 
@@ -38,11 +36,11 @@ def signup_page(request):
         if form.is_valid():
             user = form.save()
             # auto-login user
+            login(request, user)
+            #temporary auto register in projects for users tests
             projects = Project.objects.all()
             for i in projects:
                 UserProject.objects.create(user=user, project=i,role='manager',last_participation="2000-10-10 10:10")
 
-
-            login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request, 'signup.html', context={'form': form})

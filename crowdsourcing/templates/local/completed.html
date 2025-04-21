@@ -1,65 +1,67 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="left_box">
+    <div id="left_box">
 
-    <div id="canvas-container">
-        <canvas id="canvas"></canvas>
+        <div id="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
 
-</div>
+    <div id="right_box">
+        {#    TODO check un bouton dans un a ? #}
+        <a class='btn' href="{% url 'export_data' type='document' export="csv" id=doc_id %}">
+            Export data (csv)
+        </a>
+        <a class="btn" href="{% url 'export_data' type='document' export="txt" id=doc_id %}">
+            Export text (txt)
+        </a>
 
-<div id="right_box">
-    {#    TODO check un bouton dans un a ? #}
-     <a href="{% url 'export_data' type='document' id=doc_id %}">
-        <button>Exporter les données (CSV) </button>
-    </a>
+        {% if general_forum != "" %}
+            <a target="_blank" href="{% url 'user-post' type='d' id=general_forum %}" class="feedbackButton">Voir le forum de ce document</a>
+        {% endif %}
+        {% for rectangle in transcription_data %}
+            <br>
+            {# TODO a nettoyer#}
+            {#        {{ rectangle.forum }}#}
 
-
-    {% if general_forum != "" %}
-    <a target="_blank" href="{% url 'user-post' type='d' id=general_forum %}" class="feedbackButton">Voir le forum de ce document</a>
-    {% endif %}
-    {% for rectangle in transcription_data %}
-        <br>
-
-        {# TODO a nettoyer#}
-{#        {{ rectangle.forum }}#}
-
-        {% for subtask in rectangle.subtasks %}
-            {% if forloop.last %}
-                <button name="rect_{{rectangle.rectangle_id}}"  onclick="buttonclick(this)" class="accordion">{{ subtask.text }}</button>
-            {% endif %}
-        {% endfor %}
-        <div class="panel">
-            {% if rectangle.forum != '' %}
-                <a target="_blank" href="{% url 'user-post' type='r' id=rectangle.forum %}" class="feedbackButton">Voir le forum sur ce ligne</a>
-            {% endif %}
-            <p>Historique des propositions:</p>
             {% for subtask in rectangle.subtasks %}
-                <p>{{ subtask.text}}</p>
+                {% if forloop.last %}
+                    <button name="rect_{{rectangle.rectangle_id}}" onclick="buttonclick(this)" class="accordion">{{ subtask.text }}</button>
+                {% endif %}
             {% endfor %}
-        </div>
-    {% endfor %}
-</div>
+            <div class="panel">
+                {% if rectangle.forum != '' %}
+                    <a target="_blank" href="{% url 'user-post' type='r' id=rectangle.forum %}" class="feedbackButton">Voir le forum sur ce ligne</a>
+                {% endif %}
+                <p>Historique des propositions:</p>
+                {% for subtask in rectangle.subtasks %}
+                    <p>{{ subtask.text}}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 
-<script>
-    const canvas = new fabric.Canvas('canvas');
-    var rectangles = [];  // Array to store all rectangle coordinates
-    var image;
+    <script>
+        const canvas = new fabric.Canvas('canvas');
+        var rectangles = [];  // Array to store all rectangle coordinates
+        var image;
 
-    // Load the background image
-    fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
-        canvas.backgroundImage = img;
-        img.canvas = canvas;
-        canvas.setWidth(img.width);
-        canvas.setHeight(img.height);
-        canvas.requestRenderAll()
+        // Load the background image
+        fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
+            canvas.backgroundImage = img;
+            img.canvas = canvas;
+            canvas.setWidth(img.width);
+            canvas.setHeight(img.height);
+            const canvasContainer = document.getElementById('canvas-container');
+            const height = canvasContainer.clientHeight;
 
+            canvas.zoomToPoint({x: 0, y: 0}, height/img.height);
+            canvas.requestRenderAll()
+        });
 
-    });
-
-    // Draw existing rectangles on the image
-    const existingRectangles = {{ rectangles|safe }};  // Get rectangles from Django
+        // Draw existing rectangles on the image
+        const existingRectangles = {{ rectangles|safe }};  // Get rectangles from Django
         existingRectangles.forEach(function(data) {
             const rect = new fabric.Rect({
                 left: data.x,
@@ -70,7 +72,6 @@
                 fill: 'rgba(0,0,255,0.1)',
                 selectable: false,
                 rectid: data.id,
-                {#moved:false#}
                 {#TODO check dans les autre fichier si c'est uile'#}
             });
 
@@ -86,88 +87,26 @@
         });
 
 
-    var acc = document.getElementsByClassName("accordion");
-    let previousClick = null;
-    for (let i = 0; i < acc.length; i++) {
-      acc[i].addEventListener("click", function() {
-        if(previousClick!=null && previousClick!==this) {
-            previousClick.classList.toggle("active",force=false);
-            previousClick.nextElementSibling.style.display = "none";
+        var acc = document.getElementsByClassName("accordion");
+        let previousClick = null;
+        for (let i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                if(previousClick!=null && previousClick!==this) {
+                    previousClick.classList.toggle("active",force=false);
+                    previousClick.nextElementSibling.style.display = "none";
+                }
+                previousClick = this;
+
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
         }
-        previousClick = this;
-
-        this.classList.toggle("active");
-        var panel = this.nextElementSibling;
-          if (panel.style.display === "block") {
-          panel.style.display = "none";
-        } else {
-          panel.style.display = "block";
-        }
-      });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    canvas.on('mouse:down', function (opt) {
-        var evt = opt.e;
-        if (evt.altKey === true) {
-            this.isDragging = true;
-            this.selection = false;
-            this.lastPosX = evt.clientX;
-            this.lastPosY = evt.clientY;
-        }
-    });
-
-    canvas.on('mouse:down', function (opt) {
-            var evt = opt.e;
-            if (evt.altKey === true) {
-                this.isDragging = true;
-                this.selection = false;
-                this.lastPosX = evt.clientX;
-                this.lastPosY = evt.clientY;
-            }
-        });
-        canvas.on('mouse:move', function (opt) {
-            if (this.isDragging) {
-                var e = opt.e;
-                var vpt = this.viewportTransform;
-                vpt[4] += e.clientX - this.lastPosX;
-                vpt[5] += e.clientY - this.lastPosY;
-                this.requestRenderAll();
-                this.lastPosX = e.clientX;
-                this.lastPosY = e.clientY;
-            }
-        });
-        canvas.on('mouse:up', function (opt) {
-            // on mouse up we want to recalculate new interaction
-            // for all objects, so we call setViewportTransform
-            this.setViewportTransform(this.viewportTransform);
-            this.isDragging = false;
-            this.selection = true;
-        });
-
-
-        canvas.on('mouse:wheel', function (opt) {
-                var evt = opt.e;
-                var delta = opt.e.deltaY;
-                var zoom = canvas.getZoom();
-                zoom *= 0.999 ** delta;
-                if (zoom > 5) zoom = 5;
-                if (zoom < 0.1) zoom = 0.1;
-                canvas.zoomToPoint({x: opt.e.offsetX, y: opt.e.offsetY}, zoom);
-                opt.e.preventDefault();
-            }
-        );
-
 
     </script>
+    <script src="../../static/canvas_control.js"></script>
 {% endblock %}

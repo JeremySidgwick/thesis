@@ -1,5 +1,4 @@
 from django.db import models
-# from ckeditor.fields import RichTextField
 from authentication.models import User
 
 
@@ -23,6 +22,7 @@ class Document(models.Model):
     status = models.CharField(default="to_transcribe", choices=STATUS_CHOICES, max_length=100)
     name = models.CharField(default="", max_length=200,null=True,blank=True)
     # metadata = models.TextField()
+    group_name = models.CharField(default="", max_length=200,null=True,blank=True)
 
 
 class Rectangle(models.Model):
@@ -66,7 +66,6 @@ class Subtask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="subtasks")
     text = models.TextField() #TODO en rich field
     time = models.DateTimeField(auto_now_add=True)
-    feedback = models.TextField(default='')
     status = models.CharField(default="in_progress", choices=STATUS_CHOICES ,max_length=100) #in_progress ou done
 
 

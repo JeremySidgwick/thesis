@@ -2,185 +2,98 @@
 {% load static %}
 {% block content %}
 
+    <div style="width: 50% ; margin: auto;text-align: justify">
 
-<div style="margin: 30px">
-    <div class="container">
-                <div class="dx-blog-post dx-box dx-box-decorated">
+        <h1>Sujet : {{ topic.title }}</h1>
+        <div style="border: solid; border-width: 2px; border-radius: 15px;padding: 20px">
 
+            <p>{{ topic.description }}</p>
 
-                    <div class="dx-blog-post-box">
-
-                        <h1 class="h3 dx-blog-post-title">Sujet : {{ topic.title }}</h1>
-                        <ul class="dx-blog-post-info">
-                            <li>Date Posted: {{ topic.date_created }}</li>
-                            <li>Total Views: {{ topic.topic_view_count }}</li>
-                            <li>Author: {{ topic.author }}</li>
-                        </ul>
-                        <p class="mnb-2">{{ topic.description }}</p>
-                    </div>
-                    {% if image %}
-                    <div id="canvas-container" style="width: 800px;height: 400px">
-                        <canvas id="canvas" ></canvas>
-                    </div>
-{#                {% include "local/module_zoom.html" %}#}
-                {% endif %}
-                  </div>
-                <div class="dx-box mt-55">
-                    {% if  answers.count > 0 %}
-                    <h2 class="h4 mb-45">{{ answers.count }} answer{{ answers|pluralize }} in this topic: </h2>
-                    {% else %}
-                    <h2 class="h4 mb-45">Be the first to answer in this topic!</h2>
-                    {% endif %}
-                    {% for answer in answers %}
-                    <div class="dx-comment">
-
-                        <div>
-                            <div class="dx-comment-img">
-                                <img src="{{ answer.user.author.profile_pic.url }}" alt="" class="rounded-circle">
-                            </div>
-                            <div class="dx-comment-cont">
-                                <p class="dx-comment-info">
-                                    <span class="dx-comment-name">{{ answer.user|capfirst }}</span>
-
-                                    {% if answer.user.author.is_doctor %}
-                                    <span class="dx-comment-profession">
-                                        <img src="{% static 'images/badge-doctor.png' %}" width="45px;" alt="">
-                                        <span class="label-doctor">Certified Doctor</span>
-                                    </span>
-                                    {% else %}
-                                    <span class="dx-comment-profession">
-                                        <img src="{% static 'images/badge-user.png' %}" width="45px;" alt="">
-                                        <span class="label-user">General User</span>
-                                    </span>
-                                    {% endif %}
-
-                                    <span class="dx-comment-date">
-                                        answered at {{ answer.date_created }}
-                                    </span>
-                                </p>
-
-                                <div class="dx-comment-text">
-                                    <p class="mb-0">{{ answer.content }}</p>
-                                </div>
-                                <!-- vote section -->
-                                <div id="vote-section">
-                                    {% include 'vote-section.html' %}
-                                </div>
-                                <!-- / vote section -->
-
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-
-                    <form action="" method="POST" class="dx-form mt-50 mb-45">
-                        <div class="row vertical-gap">
-                            <div class="col-12">
-                                {% csrf_token %}
-                                {{ answer_form }}
-                                <input type="submit" class="dx-btn dx-btn-lg" value="Post Answer">
-                            </div>
-                        </div>
-                    </form>
+            <p style="float: right"><i>Posted on {{ topic.date_created }} by {{ topic.author }}</i></p>
+            <br>
+            {% if image %}
+                <div id="canvas-container" style="width: 900px;height: 400px">
+                    <canvas id="canvas" ></canvas>
                 </div>
-          
+            {% endif %}
+
+
+
+        </div>
+
+        <div style="width: 90%;margin: auto">
+            {% if  answers.count > 0 %}
+                <h2>{{ answers.count }} answer{{ answers|pluralize }} in this topic: </h2>
+            {% else %}
+                <h2>Be the first to answer in this topic!</h2>
+            {% endif %}
+
+            {% for answer in answers %}
+                <div style="border: solid;border-width: 1px;padding: 10px;border-radius: 10px; margin-bottom: 10px">
+
+                    <p>{{ answer.user|capfirst }} answered at {{ answer.date_created }}</p>
+                    <p>{{ answer.content }}</p>
+
+                    <div id="vote-section">{% include 'vote-section.html' %}</div>
+
+                </div>
+            {% endfor %}
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ answer_form }}
+                <input class="btn" type="submit" value="Post Answer">
+            </form>
+        </div>
+
+
     </div>
-</div>
     <script type="application/json" id="rectangles-data">
         {{ rectangles_data|safe }}
     </script>
+
     <script>
-    var canvas = new fabric.Canvas('canvas');
-    var rectangles = [];  // Array to store all rectangle coordinates
-    var image;
-    // Load the background image
-    fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
-        canvas.backgroundImage = img;
+        var canvas = new fabric.Canvas('canvas');
+        var rectangles = [];  // Array to store all rectangle coordinates
+        var image;
+        // Load the background image
+        fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
+            canvas.backgroundImage = img;
             img.canvas = canvas;
-            {#img.set({ selectable: false });#}
 
             canvas.setWidth(img.width);
             canvas.setHeight(img.height);
+            const canvasContainer = document.getElementById('canvas-container');
+            const width = canvasContainer.clientWidth;
+
+            canvas.zoomToPoint({x: 0, y: 0}, width/img.width);
             canvas.requestRenderAll()
-        // Draw existing rectangles on the image
+            // Draw existing rectangles on the image
 
-        const existingRectangles = JSON.parse(document.getElementById('rectangles-data').textContent);
+            const existingRectangles = JSON.parse(document.getElementById('rectangles-data').textContent);
 
-        existingRectangles.forEach(function(data) {
-            const rect = new fabric.Rect({
-                left: data.x,
-                top: data.y,
-                width: data.width,
-                height: data.height,
-                angle: data.angle,
-                fill: 'rgba(0,0,255,0.1)',
-                selectable: false,
-                rectid: data.id,
-                moved:false
-                {#TODO check dans les autre fichier si c'est uile'#}
+            existingRectangles.forEach(function(data) {
+                const rect = new fabric.Rect({
+                    left: data.x,
+                    top: data.y,
+                    width: data.width,
+                    height: data.height,
+                    angle: data.angle,
+                    fill: 'rgba(0,0,255,0.1)',
+                    selectable: false,
+                    rectid: data.id
+                });
+                canvas.add(rect);
+                rectangles.push(rect);
             });
-            canvas.add(rect);
-            rectangles.push(rect);
-        });
-    });
-
-
-
-
-
-
-
-
-
-
-            canvas.on('mouse:down', function (opt) {
-            var evt = opt.e;
-            if (evt.altKey === true) {
-                this.isDragging = true;
-                this.selection = false;
-                this.lastPosX = evt.clientX;
-                this.lastPosY = evt.clientY;
-            }
-        });
-        canvas.on('mouse:move', function (opt) {
-            if (this.isDragging) {
-                var e = opt.e;
-                var vpt = this.viewportTransform;
-                vpt[4] += e.clientX - this.lastPosX;
-                vpt[5] += e.clientY - this.lastPosY;
-                this.requestRenderAll();
-                this.lastPosX = e.clientX;
-                this.lastPosY = e.clientY;
-            }
-        });
-        canvas.on('mouse:up', function (opt) {
-            // on mouse up we want to recalculate new interaction
-            // for all objects, so we call setViewportTransform
-            this.setViewportTransform(this.viewportTransform);
-            this.isDragging = false;
-            this.selection = true;
         });
 
 
-        canvas.on('mouse:wheel', function (opt) {
-                var evt = opt.e;
-
-                var delta = opt.e.deltaY;
-                var zoom = canvas.getZoom();
-                console.log(zoom)
-                zoom *= 0.999 ** delta;
-                if (zoom > 5) zoom = 5;
-                if (zoom < 0.1) zoom = 0.1;
-                canvas.zoomToPoint({x: opt.e.offsetX, y: opt.e.offsetY}, zoom);
-                opt.e.preventDefault();
-            }
-        );
 
 
 
 
 
-</script>
-
+    </script>
+    <script src="../../static/canvas_control.js"></script>
 {% endblock content %}
