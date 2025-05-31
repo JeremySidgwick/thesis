@@ -18,6 +18,7 @@
 
         // Load the background image
         fabric.FabricImage.fromURL("{{ image.url }}").then(function (img) {
+            console.log("a",img)
             canvas.backgroundImage = img;
             img.canvas = canvas;
             canvas.setWidth(img.width);

@@ -27,13 +27,13 @@ nav a {
  }
 
  #left_box{
-     width: calc(100% * 0.65);
+     width: calc(100% * 0.60);
      margin: 10px;
 }
 
  #right_box{
      margin: 10px;
-     width: calc(100% * 0.35);
+     width: calc(100% * 0.40);
      border: 1px solid #8C8579;
      max-height: 80vh;
      overflow-y: scroll;
@@ -57,7 +57,7 @@ nav a {
 
 
 .forum-table{
-    outline: thin solid #b6b6b6; border-radius: 10px;border-spacing: 10px;
+    width:100%; outline: thin solid #b6b6b6; border-radius: 10px;border-spacing: 10px;
 }
 
 

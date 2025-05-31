@@ -5,7 +5,7 @@ from .models import *
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ("id","title")
 
-admin.site.register(BlogPost, BlogPostAdmin)
+admin.site.register(Announcement, BlogPostAdmin)
 
 
 class AnswerAdmin(admin.ModelAdmin):
@@ -19,4 +19,4 @@ admin.site.register(TopicView)
 
 class UserPostAdmin(admin.ModelAdmin):
     list_display = ("id", "author", 'title','related_document','related_rectangle')
-admin.site.register(UserPost, UserPostAdmin)
+admin.site.register(Topic, UserPostAdmin)

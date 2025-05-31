@@ -5,12 +5,17 @@
     <div style="margin: auto;text-align: justify">
 
         <h1>Forum</h1>
-        <a class="btn" style="margin-left: 80%" href="{% url 'announcements' %}">Announcements</a>
+    <div>
 
-        <form action="{% url 'search-result' %}">
-            <input type="text" name="q" value="" placeholder="Search key words">
-            <button  type="submit">Search</button>
+        <a class="btn" href="{% url 'announcements' %}">Announcements</a>
+        <a class="btn" href="{% url 'user-dashboard' %}">Dashboard</a>
+        <form style="float: right" action="{% url 'search-result' %}">
+            <input style="font-size: 1.05em;" type="text" name="q" value="" placeholder="Search key words">
+            <button style="font-size: 1.05em;" type="submit">Search</button>
         </form>
+    </div>
+
+
 
 
         {% if messages %}

@@ -6,15 +6,15 @@
         <h2>Post A New Topic</h2>
 
         {% if "/r/" in request.path %}
-            <p>This post will be linked to the specific rectangle</p>
+            <p style="font-size: 1.05em"> This post will be linked to the specific rectangle</p>
         {% else %}
-            <p>This post will be linked to the document</p>
+            <p style="font-size: 1.05em">This post will be linked to the document</p>
         {% endif %}
 
         <form action="" method="POST" >
             {% csrf_token %}
             {{ form }}
-            <input type="submit" value="Create topic">
+            <input style="font-size: 1.05em" type="submit" value="Create topic">
         </form>
     </div>
 

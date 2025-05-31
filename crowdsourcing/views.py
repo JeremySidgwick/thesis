@@ -6,7 +6,7 @@ from django.http import JsonResponse, HttpResponseForbidden, HttpResponseNotFoun
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 
-from forum.models import UserPost
+from forum.models import Topic
 from authentication.models import User
 from .forms import ImageUploadForm, TextForm
 from .models import Document, Rectangle, Task, Subtask, Project, UserProject
@@ -17,6 +17,7 @@ import json
 
 from django.views.generic.edit import FormView
 from .forms import FileFieldForm
+from .cron import cron_task
 
 class FileFieldFormView(FormView):
 
@@ -30,19 +31,12 @@ class FileFieldFormView(FormView):
         master_name = form.cleaned_data["Archive_name"]
         project = form.cleaned_data["project"]
         for f in files:
-            uploaded_file = Document(image=f, group_name=master_name,project=project)
+            uploaded_file = Document(image=f, archive_name=master_name,project=project)
             uploaded_file.save()
             #TODO save in (file and master name)
         return super().form_valid(form)
 
-# def upload_image(request):
-#     if request.method == 'POST':
-#         form = ImageUploadForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#     else:
-#         form = ImageUploadForm()
-#     return render(request, 'local/upload_image.html', {'form': form})
+
 
 # todo remettre le login mais ça fonctionne pas comme ça pour les class
 # @login_required()
@@ -254,7 +248,7 @@ def project_page(request,project_id):
         # Utiliser defaultdict pour regrouper les documents par group_name
         dico_by_group = defaultdict(list)
         for document in documents:
-            dico_by_group[document.group_name].append(document)
+            dico_by_group[document.archive_name].append(document)
 
         # Stocker le dictionnaire regroupé dans le dictionnaire principal
         documents_by_status[status] = dict(dico_by_group)
@@ -269,6 +263,8 @@ def project_page(request,project_id):
     # Si tu veux afficher les résultats par statut et group_name
     total = size["to_transcribe"] + size["in_transcription"] + size["to_verify"] + size["in_verification"] + size["completed"]
 
+    cand_num = len(UserProject.objects.filter(project=project_id, role="candidate"))
+
     return render(request, 'local/project.html', { "to_transcribe":documents_by_status["to_transcribe"],
                                                    "in_transcription":in_transcription,
                                                    "to_verify":to_verify,
@@ -280,7 +276,8 @@ def project_page(request,project_id):
                                                    "project":{"id":project_id,"name":project.name,'description':project.description},
                                                    "members_list":members_list,
                                                    "progress":{"total":total,"completed":size["completed"],"verification":size["to_verify"],"current":size["in_verification"]+size["in_transcription"],"new":size["to_transcribe"]}, #TODO CLEAN
-                                                   "progress_percent":{"completed":size["completed"]*100/total,"verification":size["to_verify"]*100/total,"current":(size["in_verification"]+size["in_transcription"])*100/total,"new":size["to_transcribe"]*100/total}
+                                                   "progress_percent":{"completed":size["completed"]*100/total,"verification":size["to_verify"]*100/total,"current":(size["in_verification"]+size["in_transcription"])*100/total,"new":size["to_transcribe"]*100/total},
+                                                   "candNum":cand_num,
                                                    }
                   )
 
@@ -292,9 +289,10 @@ class VerificationPage(View):
         document = Document.objects.get(pk=doc_id)
 
         if document.status == "to_verify": #debut de la verif
-            transcription_same_user = Task.objects.filter(document=document, type="transcription", user=request.user)
-            if(len(transcription_same_user)>0): #not same user transcription and verif
-                # return HttpResponseForbidden() #TODO
+            transcription_same_user = Task.objects.filter(document=document, user=request.user)
+            if(len(transcription_same_user)>0):
+                ### SKIP SAME USER CHECK FOR DEMO PURPOSE
+                #return HttpResponse("You cannot work on a document that you have already processed.")
                 pass
 
             task = Task()
@@ -387,6 +385,13 @@ class VerificationPage(View):
         to_del=[]
 
         for key, text_value in request.POST.items():
+            if key.startswith("back-transcription"):
+                document.status = "to_transcribe"
+                document.save()
+                task.status = "cancelled"
+                task.save()
+                return redirect('/project/' + str(document.project.id))
+
             if key.startswith("submit"):
                 document.status = 'completed'
                 document.save()
@@ -441,7 +446,7 @@ def completed_page(request,doc_id):
     document = get_object_or_404(Document,pk=doc_id)
 
     try:
-        get_object_or_404(UserPost, related_document=document).id
+        get_object_or_404(Topic, related_document=document).id
         general_forum = doc_id
     except Exception as e:
         general_forum =''
@@ -463,7 +468,7 @@ def completed_page(request,doc_id):
             "subtasks": [],  # Liste des subtasks
         }
         try:
-            get_object_or_404(UserPost, related_rectangle=rect).id
+            get_object_or_404(Topic, related_rectangle=rect).id
             rectangle_data['forum'] = rect.id
         except Exception as e:
             pass
@@ -538,3 +543,7 @@ def preview_page(request,doc_id):
 
     image = document.image
     return render(request, 'local/preview.html',context={'image': image})
+
+def cron_page(request):
+    cron_task()
+    return HttpResponse('cron task')

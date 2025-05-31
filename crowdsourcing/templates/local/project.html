@@ -152,19 +152,25 @@
 
         <div class="right" style="width: 25%;padding: 10px">
 
-            <div class="card">
-                {% if role == "manager" %}
+
+            {% if role == "manager" %}
+                <div class="card">
                     <h4>Access request</h4>
-                    {#    TODO #}
-                {% elif role == "visitor" %}
-                    <a class="btn">Request access to the project</a>
-                {% elif role == "candidate" %}
+                    <p> {{ candNum }} candidature(s) pending</p>
+                </div>
+            {% elif role == "visitor" %}
+                <div class="card">
+                    <a type="button" class="btn">Request access to the project</a>
+                </div>
+            {% elif role == "candidate" %}
+                <div class="card">
                     <p>The request is being processed</p>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
+
 
             <div class="card">
-                <h4>Project status </h4>
+                <h4>Project status</h4>
                 <div class="progress-container">
                     <div class="progress-bar bar4" style="width: {{progress_percent.new }}%" title="{{ progress.new }} documents not started"></div>
                     <div class="progress-bar bar2" style="width: {{progress_percent.verification }}%" title="{{ progress.verification }} documents to verify"></div>

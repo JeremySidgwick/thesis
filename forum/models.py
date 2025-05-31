@@ -6,7 +6,7 @@ from authentication.models import User
 from crowdsourcing.models import Document, Subtask, Rectangle
 
 
-class UserPost(models.Model):
+class Topic(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200, null=True)
     description = models.TextField(max_length=500, null=True)
@@ -32,8 +32,15 @@ class UserPost(models.Model):
     def topic_view_count(self):
         return TopicView.objects.filter(user_post=self).count()
 
+class TopicView(models.Model):
+    user_post = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.user_post.title
+
 class Answer(models.Model):
-    user_post = models.ForeignKey(UserPost, on_delete=models.CASCADE)
+    user_post = models.ForeignKey(Topic, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     content = models.TextField(max_length=500)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
@@ -47,22 +54,11 @@ class Answer(models.Model):
     def upvotes_count(self):
         return Answer.objects.filter(user=self).count()
 
-class BlogPost(models.Model):
+class Announcement(models.Model):
     title = models.CharField(max_length=100)
-    # slug = models.SlugField(max_length=200, unique=True, null=True, blank=True) #TODO a enlever et automatiser
     content = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    thumbnail = models.ImageField(default="header.jpg", null=True, blank=True)
+    thumbnail = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.title
-
-
-class TopicView(models.Model):
-    user_post = models.ForeignKey(UserPost, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return self.user_post.title
-
-    

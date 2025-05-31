@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crowdsourcing",
     "authentication",
-    'forum'
+    'forum',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -90,12 +93,16 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
-    # {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    # {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    # {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+
+CRONJOBS = [
+    ('*/5 * * * *', 'crowdsourcing.cron.cron_task'),
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -114,12 +121,16 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# Django debug toolbar
+INTERNAL_IPS = ['127.0.0.1']
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

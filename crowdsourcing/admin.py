@@ -40,7 +40,7 @@ def duplicate(modeladmin, request, queryset):
     print("duplicate done")
 
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ("id","project",'status',"name","group_name")
+    list_display = ("id","project",'status',"name", "archive_name")
     actions = [duplicate]
 admin.site.register(Document, DocumentAdmin)
 

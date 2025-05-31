@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-    <div style="margin:auto">
+    <div style="margin:auto;margin-bottom: 20px">
         <h2>User Dashboard</h2>
 
         <p>{{ user.username }} | Joined @ {{ user.date_joined|date }}</p>
@@ -11,7 +11,7 @@
             {% if topic_count > 0 %}
                 <h2>Topics You Created</h2>
 
-                <table>
+                <table class="forum-table">
                     <thead>
                     <tr>
                         <th>Topic</th>
@@ -22,9 +22,9 @@
                     </thead>
                     <tbody>
                     {% for post in topic_posted %}
-                        <tr>
+                        <tr style="outline: thin solid #b6b6b6; border-radius: 10px;border-spacing: 30px;">
                             <th>
-                                <a href="{% url 'topic-detail' post.id %}">{{ post.title }}</a>
+                                <a href="{% url 'topic-detail' post.id %}">{{ post.title|truncatechars:30 }}</a>
                             </th>
                             <td>{{ post.topic_view_count }}</td>
                             <td>{{ post.answer_count }}</td>
@@ -43,7 +43,7 @@
             {% if ans_count > 0 %}
                 <h2>Others topics you participated</h2>
 
-                <table>
+                <table class="forum-table">
                     <thead>
                     <tr>
                         <th>Topic</th>
@@ -55,9 +55,9 @@
                     <tbody>
 
                     {% for ans in ans_posted %}
-                        <tr>
+                        <tr style="outline: thin solid #b6b6b6; border-radius: 10px;border-spacing: 30px;">
                             <th>
-                                <a href="{% url 'topic-detail' ans.id %}">{{ ans.title }}</a>
+                                <a href="{% url 'topic-detail' ans.id %}">{{ ans.title|truncatechars:30 }}</a>
                             </th>
                             <td>{{ ans.topic_view_count }}</td>
                             <td>{{ ans.answer_count }}</td>

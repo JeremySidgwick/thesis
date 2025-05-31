@@ -10,12 +10,15 @@
 
     <div id="right_box">
         {#    TODO check un bouton dans un a ? #}
+        <div style="margin-top: 10px">
+
         <a class='btn' href="{% url 'export_data' type='document' export="csv" id=doc_id %}">
             Export data (csv)
         </a>
         <a class="btn" href="{% url 'export_data' type='document' export="txt" id=doc_id %}">
             Export text (txt)
         </a>
+        </div>
 
         {% if general_forum != "" %}
             <a target="_blank" href="{% url 'user-post' type='d' id=general_forum %}" class="feedbackButton">Voir le forum de ce document</a>
@@ -34,7 +37,7 @@
                 {% if rectangle.forum != '' %}
                     <a target="_blank" href="{% url 'user-post' type='r' id=rectangle.forum %}" class="feedbackButton">Voir le forum sur ce ligne</a>
                 {% endif %}
-                <p>Historique des propositions:</p>
+                <p>History of proposals:</p>
                 {% for subtask in rectangle.subtasks %}
                     <p>{{ subtask.text}}</p>
                 {% endfor %}

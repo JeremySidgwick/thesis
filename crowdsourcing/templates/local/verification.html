@@ -8,35 +8,40 @@
     </div>
 </div>
 
-<div id="right_box">
-        <form action="" method="post" novalidate>
-            {% csrf_token %}
+<div id="right_box" style="overflow-y:hidden ">
 
+
+
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        <div style="overflow-y: scroll;max-height: 72vh;">
 
             {% for rectangle in transcription_data %}
 
-                <div style="border: 1px solid black;display: flex">
+                <div style="border: 1px solid black;display: flex;padding-left: 8px">
                     {# left text part#}
-                    <div style="width: 85%">
+                    <div style="width: 82%">
                         {% for subtask in rectangle.subtasks %}
-                            <p>{{ subtask.text}}  </p>
+                            <p style="font-size: 1.15em ">{{ subtask.text}}  </p>
                         {% endfor %}
                     </div>
 
                     {# right buttons part#}
-                    <div style="float: right;width: 25%">
+                    <div style="float: right;width: 18%;min-width: 125px; display:flex;align-items: center;justify-content: space-around">
                         <a type="button" href="{% url 'user-post' type='r' id=rectangle.rectangle_id %}"><i style="font-size: 25px" class="fa fa-commenting" aria-hidden="true"></i></a>
 
                         {% if rectangle.done %}
                             <i class="fa fa-check-square-o" style="font-size: 25px"></i>
                         {% else %}
-                            <button type="button" class="edit-button toggle-button" data-id="edit-{{ rectangle.rectangle_id }}" data-hide-id="delete-{{ rectangle.rectangle_id }}">
-                            <i class="fa fa-pencil" aria-hidden="true" style="font-size: 25px"></i>
-                        </button>
+                            <div>
+                                <button type="button" class="edit-button toggle-button" data-id="edit-{{ rectangle.rectangle_id }}" data-hide-id="delete-{{ rectangle.rectangle_id }}">
+                                    <i class="fa fa-pencil" aria-hidden="true" style="font-size: 25px"></i>
+                                </button>
+                            </div>
 
-                            <div style="border: solid">
-                            <label for="vehicle1"> delete rectangle</label>
-                            <input type="checkbox" name="del_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}">
+                            <div style="border: solid;border-width: 1px">
+                                <i class="fa fa-trash" aria-hidden="true" style="font-size: 25px"></i>
+                                <input type="checkbox" style="accent-color: red" name="del_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}">
 
                             </div>
 
@@ -44,27 +49,31 @@
                     </div>
                 </div>
 
-        {# Popup edit #}
-        <div id="edit-{{ rectangle.rectangle_id }}" class="popup edit-div" style="display: none;">
-            <label for="rect_{{ rectangle.rectangle_id }}">Suggest another transcription for this rectangle:</label>
-            <br>
-            <input type="text" name="rect_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}" value="{{ rectangle.current }}" onclick="buttonclick(this)">
-        </div>
+                {# Popup edit #}
+                <div id="edit-{{ rectangle.rectangle_id }}" class="popup edit-div" style="display: none; padding: 5px 0px 35px 15px">
+                    <label style="font-size: 1.05em" for="rect_{{ rectangle.rectangle_id }}">Suggest another transcription for this rectangle:</label>
+                    <br>
+                    <input  style="width: 80%;font-size: 1.05em" type="text" name="rect_{{ rectangle.rectangle_id }}" data-rect-id="{{ rectangle.rectangle_id }}" value="{{ rectangle.current }}" onclick="buttonclick(this)">
+                </div>
 
 
-        {# Popup delete #}
-        <div id="delete-{{ rectangle.rectangle_id }}" class="popup delete-div" style="display: none;">
-            <p>Delete this rectangle</p>
-        </div>
+                {# Popup delete #}
+                <div id="delete-{{ rectangle.rectangle_id }}" class="popup delete-div" style="display: none;">
+                    <p>Delete this rectangle</p>
+                </div>
 
             {% endfor %}
+        </div>
+        <div style="margin:7px">
 
             <input name='submit' type="submit"  value="Finish verification">
             <input name="save" type="submit" formnovalidate value="Save progress"> {# submit for review   #}
-
-        </form>
+            <input name='back-transcription' type="submit"  value="Send back to transcription">
         <br>
     <a target="_blank" href="{% url 'user-post' type='d' id=request.path|slice:"14:-1" %}" class="feedbackButton"><i class="fa fa-commenting" aria-hidden="true"></i>Forum of the document</a>
+        </div>
+
+        </form>
     </div>
 
 <script>

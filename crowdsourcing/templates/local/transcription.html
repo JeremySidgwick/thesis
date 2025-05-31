@@ -5,20 +5,22 @@
 
     <div id="left_box">
         <div id="canvas-container">
-            <canvas id="canvas2">a</canvas>
+            <canvas id="canvas2"></canvas>
         </div>
 
-        <button id="add2">Add new rectangle</button>
-        <button id="submit" onclick="submitRectangles()">Save rectangles <i class="fa fa-floppy-o" aria-hidden="true"></i> </button>
+        <button style="font-size: 1.05em; margin: 3px" id="add2">Add new rectangle</button>
+        <button style="font-size: 1.05em; margin: 3px" id="submit" onclick="submitRectangles()">Save rectangles <i class="fa fa-floppy-o" aria-hidden="true"></i> </button>
 
     </div>
-    <div id="right_box">
+    <div id="right_box" style="padding: 5px;overflow-y:hidden">
 
         <form action="" method="post">
 
 
             {% csrf_token %}
-            Transcription :
+            <p style="font-size: 1.1em">Transcription :</p>
+            <div style="overflow-y: scroll;max-height: 70vh;">
+
             {% for rect, form, text_value in forms %}
                 <div>
                     <label for="rect_{{ rect.id }}"></label>
@@ -26,15 +28,16 @@
                     <!-- Utilisez un champ de texte avec l'attribut "name" unique -->
                     <input type="text" id='a' name="rect_{{ rect.id }}" data-rect-id="{{ rect.id }}" required
                            value="{{ text_value }}" onclick="buttonclick(this)"
-                           style="width: 90%"
+                           style="font-size: 1.1em; width: 90%"
                     >
                     <a type="button" href="{% url 'user-post' type='r' id=rect.id %}"><i style="font-size: 25px" class="fa fa-commenting" aria-hidden="true"></i></a>
                 </div>
             {% endfor %}
+            </div>
             <a target="_blank" href="{% url 'user-post' type='d' id=document.id %}" class="feedbackButton"><i class="fa fa-commenting" aria-hidden="true"></i>Forum of the document</a>
 
-            <input name="save" type="submit" formnovalidate value="Save progression"> {# submit for review   #}
-            <input name='submit' type="submit" value="Submit to verification">
+            <input style="font-size: 1.05em; margin: 3px"  name="save" type="submit" formnovalidate value="Save progress"> {# submit for review   #}
+            <input style="font-size: 1.05em;margin: 3px" name='submit' type="submit" value="Submit for verification">
         </form>
     </div>
 

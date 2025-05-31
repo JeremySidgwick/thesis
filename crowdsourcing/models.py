@@ -22,7 +22,7 @@ class Document(models.Model):
     status = models.CharField(default="to_transcribe", choices=STATUS_CHOICES, max_length=100)
     name = models.CharField(default="", max_length=200,null=True,blank=True)
     # metadata = models.TextField()
-    group_name = models.CharField(default="", max_length=200,null=True,blank=True)
+    archive_name = models.CharField(default="", max_length=200, null=True, blank=True)
 
 
 class Rectangle(models.Model):
@@ -49,7 +49,7 @@ class Task(models.Model):
     )
     document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name="tasks")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
-    stated = models.DateTimeField(auto_now_add=True)
+    started = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField()
     status = models.CharField(default="in_progress", choices=STATUS_CHOICES, max_length=100) # in progress / aborted / timeout / done
     type = models.CharField(default="transcription", choices=TYPE_CHOICES, max_length=100) #transcription / verification

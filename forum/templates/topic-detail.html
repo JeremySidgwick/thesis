@@ -4,35 +4,32 @@
 
     <div style="width: 50% ; margin: auto;text-align: justify">
 
-        <h1>Sujet : {{ topic.title }}</h1>
+        <h2>Sujet : {{ topic.title }}</h2>
         <div style="border: solid; border-width: 2px; border-radius: 15px;padding: 20px">
 
-            <p>{{ topic.description }}</p>
+            <p style="font-size: 1.1em">{{ topic.description }}</p>
 
             <p style="float: right"><i>Posted on {{ topic.date_created }} by {{ topic.author }}</i></p>
             <br>
             {% if image %}
-                <div id="canvas-container" style="width: 900px;height: 400px">
+                <div id="canvas-container" style="height: 350px">
                     <canvas id="canvas" ></canvas>
                 </div>
             {% endif %}
-
-
-
         </div>
 
         <div style="width: 90%;margin: auto">
             {% if  answers.count > 0 %}
-                <h2>{{ answers.count }} answer{{ answers|pluralize }} in this topic: </h2>
+                <h3>{{ answers.count }} answer{{ answers|pluralize }} in this topic: </h3>
             {% else %}
-                <h2>Be the first to answer in this topic!</h2>
+                <h3>Be the first to answer in this topic!</h3>
             {% endif %}
 
             {% for answer in answers %}
                 <div style="border: solid;border-width: 1px;padding: 10px;border-radius: 10px; margin-bottom: 10px">
 
-                    <p>{{ answer.user|capfirst }} answered at {{ answer.date_created }}</p>
-                    <p>{{ answer.content }}</p>
+                    <p><i>{{ answer.user|capfirst }} answered at {{ answer.date_created }}</i></p>
+                    <p style="font-size: 1.1em">{{ answer.content }}</p>
 
                     <div id="vote-section">{% include 'vote-section.html' %}</div>
 

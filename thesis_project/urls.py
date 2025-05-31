@@ -36,8 +36,11 @@ urlpatterns = [
     path('login/', auth_views.login_page, name='login'),
     path('help/', views.help, name='help'),
     path('about/', views.about, name='about'),
+
     path('logout/', auth_views.logout_user, name='logout'),
     path('signup/', auth_views.signup_page, name='signup'),
+
+    path('cron/', views.cron_page, name='cron_page'),
     path('', include('forum.urls')),
 
     path('export/<str:type>/<str:export>/<int:id>',views.export_data,name='export_data'),
@@ -49,4 +52,3 @@ urlpatterns = [
 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

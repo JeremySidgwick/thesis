@@ -10,6 +10,6 @@ urlpatterns = [
     path('user-dashboard/', views.userDashboard, name='user-dashboard'),
     path('upvote/', views.upvote, name='upvote'),
     path('downvote/', views.downvote, name='downvote'),
-    path('announcements/', views.blogListView, name='announcements'),
-    path('announcements/<int:id>/', views.blogDetailView, name='announcement-detail'),
+    path('announcements/', views.announcementsList, name='announcements'),
+    path('announcements/<int:id>/', views.announcementView, name='announcement-detail'),
 ]

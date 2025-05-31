@@ -5,7 +5,7 @@
         <div style="display: flex; width: 100%; height: 30vh"  >
 
             {% for project in projects %}
-                <a style="height: 70px;width: 150px; text-align: center" class="btn" href="/project/{{ project.id }}">{{ project.name }}</a>
+                <a style="font-size: 1.1em; height: 80px;width: 180px; text-align: center" class="btn" href="/project/{{ project.id }}">Projet: {{ project.name }}</a>
             {% endfor %}
         </div>
         <br>
